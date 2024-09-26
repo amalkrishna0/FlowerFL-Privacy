@@ -1,0 +1,13 @@
+# conf/server_config.yaml
+
+server:
+  num_rounds: 3               
+  min_fit_clients: 4           
+  min_eval_clients: 4         
+  min_available_clients: 4     
+
+strategy:
+  name: "FedAvg"              
+  parameters:
+    fraction_fit: 1.0         
+    fraction_eval: 1.0        
