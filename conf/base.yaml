@@ -1,7 +1,7 @@
 # conf/server_config.yaml
 
 server:
-  num_rounds: 3               
+  num_rounds: 3              
   min_fit_clients: 4           
   min_eval_clients: 4         
   min_available_clients: 4     

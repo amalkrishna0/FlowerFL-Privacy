@@ -7,10 +7,10 @@ def main(cfg: DictConfig):
     
     strategy = fl.server.strategy.FedAvg(
         min_fit_clients=cfg.server.min_fit_clients,
-        min_eval_clients=cfg.server.min_eval_clients,
+        min_evaluate_clients=cfg.server.min_eval_clients,
         min_available_clients=cfg.server.min_available_clients,
         fraction_fit=cfg.strategy.parameters.fraction_fit,
-        fraction_eval=cfg.strategy.parameters.fraction_eval,
+        fraction_evaluate=cfg.strategy.parameters.fraction_eval,
     )
 
     fl.server.start_server(

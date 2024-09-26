@@ -5,3 +5,4 @@ numpy==1.23.0
 torch==1.13.1
 torchvision==0.14.1
 grpcio==1.51.1
+matplotlib
