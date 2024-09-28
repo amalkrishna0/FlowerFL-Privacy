@@ -1,13 +1,13 @@
-# conf/server_config.yaml
-
+# server configurations
 server:
-  num_rounds: 3              
-  min_fit_clients: 4           
-  min_eval_clients: 4         
-  min_available_clients: 4     
+  num_rounds: 3               # number of federated learning rounds
+  min_fit_clients: 4           # minimum number of clients needed to participate in training
+  min_eval_clients: 4          # minimum number of clients needed to participate in evaluation
+  min_available_clients: 4     # minimum number of available clients required to start a round
 
+# strategy configurations
 strategy:
-  name: "FedAvg"              
+  name: "FedAvg"               # strategy name, using FedAvg (federated averaging)
   parameters:
-    fraction_fit: 1.0         
-    fraction_eval: 1.0        
+    fraction_fit: 1.0          # fraction of clients selected for training in each round (1.0 means all clients)
+    fraction_eval: 1.0         # fraction of clients selected for evaluation in each round (1.0 means all clients)
