@@ -1,34 +1,53 @@
-# libraries used
-from typing import Dict, Tuple  # for type hinting
-from flwr.common import NDArrays  # for handling numpy arrays in federated learning
-import tensorflow as tf  # tensorflow for defining and training the model
-import flwr as fl  # flower framework for federated learning
-from model import model  # import the model architecture from model.py
+from typing import Dict, Tuple
+from flwr.common import NDArrays
+import tensorflow as tf
+import flwr as fl
+from model import model
+from dotenv import load_dotenv
+import os 
+import numpy as np
+load_dotenv()
 
-# load the MNIST dataset
-(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+(x_train_full, y_train_full), (x_test_full, y_test_full) = tf.keras.datasets.mnist.load_data()
 
-# class for the mnist client, inherits from flwr's NumPyClient
-class MNIST(fl.client.NumPyClient):
-    
-    # method to retrieve the model parameters (weights) for sending to the server
+
+
+def filter_data_by_label(x_data, y_data, labels: Tuple[int, int]):
+    filter_idx = np.isin(y_data, labels)
+    return x_data[filter_idx], y_data[filter_idx]
+
+class MNISTLabelClient(fl.client.NumPyClient):
+    def __init__(self, labels: Tuple[int, int]):
+        self.labels = labels
+        self.x_train, self.y_train = filter_data_by_label(x_train_full, y_train_full, labels)
+        self.x_test, self.y_test = filter_data_by_label(x_test_full, y_test_full, labels)
+        
+        print(f"Client with labels {labels} - Train size: {len(self.x_train)}, Test size: {len(self.x_test)}")
+
+        model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])        
+
+
     def get_parameters(self, config):
-        return model.get_weights()  # returns the current model weights
-    
-    # method to train the model on local data with the parameters received from the server
-    def fit(self, parameters, config):
-        model.set_weights(parameters)  # set the received parameters as the current model's weights
-        model.fit(x_train, y_train, epochs=1, batch_size=32)  # train the model on local data
-        return model.get_weights(), len(x_train), {}  # return updated weights and the number of samples used
-    
-    # method to evaluate the model on local test data
-    def evaluate(self, parameters, config):
-        model.set_weights(parameters)  # set the received parameters as the current model's weights
-        loss, accuracy = model.evaluate(x_test, y_test)  # evaluate the model on the test data
-        return loss, len(x_test), {"accuracy": accuracy}  # return the loss, number of test samples, and accuracy
+        return model.get_weights()
 
-# start the mnist client and connect it to the server
-fl.client.start_numpy_client(
-    server_address="127.0.0.1:8000",  # connect to the server at localhost:8000
-    client=MNIST()  # use the MNIST client class
-)
+    def fit(self, parameters, config):
+        model.set_weights(parameters)
+        model.fit(self.x_train, self.y_train, epochs=1, batch_size=32, verbose=1)
+        return model.get_weights(), len(self.x_train), {}
+
+    def evaluate(self, parameters, config):
+        model.set_weights(parameters)
+        loss, accuracy = model.evaluate(self.x_test, self.y_test, verbose=1)
+        print(f"Evaluation - Loss: {loss}, Accuracy: {accuracy}") 
+        return loss, len(self.x_test), {"accuracy": accuracy}
+
+def start_client(labels: Tuple[int, int]):
+    fl.client.start_client(
+        server_address=os.getenv("FL_SERVER_ADDRESS", "0.0.0.0:5555"),  
+        client=MNISTLabelClient(labels)
+    )
+
+if __name__ == "__main__":
+    import sys
+    label = int(sys.argv[1])
+    start_client(label)

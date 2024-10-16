@@ -1,9 +1,9 @@
 # server configurations
 server:
-  num_rounds: 3               # number of federated learning rounds
-  min_fit_clients: 4           # minimum number of clients needed to participate in training
-  min_eval_clients: 4          # minimum number of clients needed to participate in evaluation
-  min_available_clients: 4     # minimum number of available clients required to start a round
+  num_rounds: 20               # number of federated learning rounds
+  min_fit_clients: 5           # minimum number of clients needed to participate in training
+  min_eval_clients: 5          # minimum number of clients needed to participate in evaluation
+  min_available_clients: 5     # minimum number of available clients required to start a round
 
 # strategy configurations
 strategy:
