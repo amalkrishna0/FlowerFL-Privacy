@@ -15,7 +15,6 @@ class MaliciousClient(fl.client.NumPyClient):
 
     def fit(self, parameters, config):
         print("Extracted Model Parameters:", parameters)
-        
         timestamp = time.strftime("%Y%m%d-%H%M%S")
         
         for idx, param in enumerate(parameters):
@@ -26,7 +25,8 @@ class MaliciousClient(fl.client.NumPyClient):
         return parameters, 0, {}
 
     def evaluate(self, parameters, config):
-        return 0.0, 0, {}
+        return 0.0, 0, {"accuracy": 0.0}
+
 
 output_directory = "extracted_parameters"
 

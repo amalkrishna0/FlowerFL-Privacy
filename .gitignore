@@ -1,3 +1,4 @@
 outputs
 extracted_parameters
 .env
+extracted_data.py

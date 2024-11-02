@@ -3,8 +3,7 @@ import time
 
 # Server and client commands
 server_command = ["python", "server.py"]
-label_pairs = [(0, 1), (2, 3), (4, 5), (6, 7), (8, 9)]
-client_commands = [["python", "client.py", str(lp[0]), str(lp[1])] for lp in label_pairs]
+client_commands = [["python", "client.py", str(n)] for n in range(10)]
 
 # Start the server in a new console window
 print("Starting the server...")
@@ -16,7 +15,7 @@ time.sleep(10)
 # Start the clients in new console windows
 client_processes = []
 for i, client_command in enumerate(client_commands):
-    print(f"Starting client {i} with labels {client_command[2]} and {client_command[3]}...")
+    print(f"Starting client {i} with label {client_command[2]}...")
     client_process = subprocess.Popen(client_command, creationflags=subprocess.CREATE_NEW_CONSOLE)
     client_processes.append(client_process)
 
