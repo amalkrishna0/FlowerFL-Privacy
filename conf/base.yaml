@@ -1,13 +1,12 @@
-# server configurations
 server:
-  num_rounds: 10  # number of federated learning rounds
-  min_fit_clients: 10      # minimum number of clients needed to participate in training
-  min_eval_clients: 10        # minimum number of clients needed to participate in evaluation
-  min_available_clients: 10    # minimum number of available clients required to start a round
+  num_rounds: 3               
+  min_fit_clients: 10          
+  min_eval_clients: 10         
+  min_available_clients: 10    
+  
 
-# strategy configurations
 strategy:
-  name: "FedAvg"               # strategy name, using FedAvg (federated averaging)
+  name: "FedAvg"                
   parameters:
-    fraction_fit: 1.0          # fraction of clients selected for training in each round (1.0 means all clients)
-    fraction_eval: 1.0         # fraction of clients selected for evaluation in each round (1.0 means all clients)
+    fraction_fit: 1.0          
+    fraction_eval: 1.0          

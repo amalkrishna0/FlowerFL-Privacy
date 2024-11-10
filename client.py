@@ -1,89 +1,137 @@
-from typing import Dict, Tuple
-from flwr.common import NDArrays
-import tensorflow as tf
 import flwr as fl
-from model import model
-from dotenv import load_dotenv
-import os 
+import torch
+from torch import optim
+from torchvision import datasets, transforms
+from torch.utils.data import DataLoader
 import numpy as np
+import tenseal as ts
+import pickle
+import argparse
+import seaborn as sns
+import torch.nn.functional as F
+from dotenv import load_dotenv
+import os
+import torch.nn as nn
+from model import Net
+
 load_dotenv()
 
-# Load MNIST dataset
-(x_train_full, y_train_full), (x_test_full, y_test_full) = tf.keras.datasets.mnist.load_data()
+with open("secret_context.pkl", "rb") as f:
+    secret_context = pickle.load(f)
+
+context = ts.context_from(secret_context)
 
 
-
-"""
-Function to filter data based on the given labels.
-It returns the subset of data that matches the specified labels.
-"""
-def filter_data_by_label(x_data, y_data, labels: Tuple[int, int]):
-    filter_idx = np.isin(y_data, labels)
-    return x_data[filter_idx], y_data[filter_idx]
-
-
-"""Flower client for MNIST dataset with specific labels"""
-class MNISTLabelClient(fl.client.NumPyClient):
-    def __init__(self, labels: Tuple[int, int]):
-        """
-        Initializes the client with filtered training and testing data based on the provided labels.
-        Also compiles the model 
-        """
-        self.labels = labels
-        self.x_train, self.y_train = filter_data_by_label(x_train_full, y_train_full, labels)
-        self.x_test, self.y_test = filter_data_by_label(x_test_full, y_test_full, labels)
-        
-        print(f"Client with labels {labels} - Train size: {len(self.x_train)}, Test size: {len(self.x_test)}")
-
-        model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])        
-
-
-    """
-    Method to retrieve the current model weights to send to the server.
-    """
+class HomomorphicFlowerClient(fl.client.NumPyClient):
+    def __init__(self, cid, net, trainloader, valloader, testloader):
+        self.cid = cid
+        self.net = net
+        self.trainloader = trainloader
+        self.valloader = valloader
+        self.testloader = testloader
     def get_parameters(self, config):
-        return model.get_weights()
+        params = [param.cpu().detach().numpy() for param in self.net.parameters()]
+        encrypted_params = [ts.ckks_vector(context, param.flatten()).serialize() for param in params]
+        return encrypted_params
 
+    def set_parameters(self, parameters):
+        params = []
+        for param in parameters:
+            serialized_param = param.tobytes()
+            ckks_vector = ts.lazy_ckks_vector_from(serialized_param)
+            ckks_vector.link_context(context)
+            decrypted_param = ckks_vector.decrypt()
+            decrypted_param = np.array(decrypted_param)
+            params.append(decrypted_param)
 
+        params_dict = zip(self.net.state_dict().keys(), params)
+        state_dict = {k: torch.Tensor(v.reshape(self.net.state_dict()[k].shape)) for k, v in params_dict}
+        
+        self.net.load_state_dict(state_dict, strict=True)
 
-    """
-    Method to train the model locally on the client's data.
-    The model's weights are updated after training and sent back to the server.
-    """
     def fit(self, parameters, config):
-        model.set_weights(parameters)
-        model.fit(self.x_train, self.y_train, epochs=1, batch_size=32, verbose=1)
-        return model.get_weights(), len(self.x_train), {}
+        self.set_parameters(parameters)
+        train(self.net, self.trainloader, epochs=5)
+        self.generate_confusion_matrix()
+        return self.get_parameters(config={}), len(self.trainloader.dataset), {"partition_id": self.cid}
 
-
-
-    """
-    Method to evaluate the model on the client's local test data.
-    After evaluation, the loss and accuracy are sent back to the server.
-    """
     def evaluate(self, parameters, config):
-        model.set_weights(parameters)
-        loss, accuracy = model.evaluate(self.x_test, self.y_test, verbose=1)
-        print(f"Evaluation - Loss: {loss}, Accuracy: {accuracy}") 
-        return loss, len(self.x_test), {"accuracy": accuracy}
+        self.set_parameters(parameters)
+        val_loss, accuracy = test(self.net, self.valloader)
+        return float(val_loss), len(self.valloader.dataset), {"val_loss": float(val_loss), "accuracy": float(accuracy)}
+    def generate_confusion_matrix(self):
+        all_preds = []
+        all_labels = []
+
+        self.net.eval()
+        with torch.no_grad():
+            for images, labels in self.valloader:
+                outputs = self.net(images)
+                _, predicted = outputs.max(1)
+                all_preds.extend(predicted.cpu().numpy())
+                all_labels.extend(labels.cpu().numpy())
+
+        
+def train(net, trainloader, epochs):
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+    net.train()
+    for _ in range(epochs):
+        for images, labels in trainloader:
+            optimizer.zero_grad()
+            outputs = net(images)
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
 
 
-"""
-Function to start the Flower client.
-The client connects to the server using the specified server address and labels.
-"""
-def start_client(labels: Tuple[int, int]):
+def test(net, testloader):
+    criterion = nn.CrossEntropyLoss()
+    net.eval()
+    val_loss = 0.0
+    correct = 0
+    total = 0
+    with torch.no_grad():
+        for images, labels in testloader:
+            outputs = net(images)
+            val_loss += criterion(outputs, labels).item()
+            _, predicted = outputs.max(1)
+            total += labels.size(0)
+            correct += predicted.eq(labels).sum().item()
+    accuracy = correct / total
+    return val_loss / len(testloader), accuracy
+
+def load_data(label, num_clients=10):
+    transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.1307,), (0.3081,))
+    ])
+
+    mnist_train = datasets.MNIST('data', train=True, download=True, transform=transform)
+    mnist_test = datasets.MNIST('data', train=False, download=True, transform=transform)
+    
+    train_data = [(img, target) for img, target in mnist_train if target == label]
+    test_data = [(img, target) for img, target in mnist_test if target == label]
+    
+    trainloader = DataLoader(train_data, batch_size=32, shuffle=True)
+    valloader = DataLoader(train_data, batch_size=32) 
+    testloader = DataLoader(test_data, batch_size=32)
+    
+    return trainloader, valloader, testloader
+
+def main():
+    parser = argparse.ArgumentParser(description="Federated Learning Client")
+    parser.add_argument("--label", type=int, required=True, help="Label of data this client will handle")
+    args = parser.parse_args()
+
+    trainloader, valloader, testloader = load_data(args.label)
+    
+    net = Net()
+    
     fl.client.start_client(
-        server_address=os.getenv("FL_SERVER_ADDRESS", "0.0.0.0:5555"),  
-        client=MNISTLabelClient(labels)
+        server_address=os.getenv("FL_SERVER_ADDRESS", "localhost:8080"),
+        client=HomomorphicFlowerClient(str(args.label), net, trainloader, valloader, testloader)
     )
 
-
-"""
-Main entry point of the script.
-The client is started with a label provided as a command-line argument.
-"""
 if __name__ == "__main__":
-    import sys
-    label = int(sys.argv[1])
-    start_client(label)
+    main()
