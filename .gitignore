@@ -1,0 +1,6 @@
+outputs
+extracted_parameters
+.env
+extracted_data.py
+data
+start_client.ps1

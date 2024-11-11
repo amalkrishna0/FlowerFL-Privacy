@@ -1,7 +1,9 @@
+from dotenv import load_dotenv
 import flwr as fl
 import numpy as np
 import os
 import time
+load_dotenv()
 
 class MaliciousClient(fl.client.NumPyClient):
     def __init__(self, output_dir: str):
@@ -13,7 +15,6 @@ class MaliciousClient(fl.client.NumPyClient):
 
     def fit(self, parameters, config):
         print("Extracted Model Parameters:", parameters)
-        
         timestamp = time.strftime("%Y%m%d-%H%M%S")
         
         for idx, param in enumerate(parameters):
@@ -24,11 +25,12 @@ class MaliciousClient(fl.client.NumPyClient):
         return parameters, 0, {}
 
     def evaluate(self, parameters, config):
-        return 0.0, 0, {}
+        return 0.0, 0, {"accuracy": 0.0}
+
 
 output_directory = "extracted_parameters"
 
 fl.client.start_numpy_client(
-    server_address="localhost:8000", 
+    server_address=os.getenv("FL_SERVER_ADDRESS","0.0.0.0:2222"), 
     client=MaliciousClient(output_dir=output_directory)
 )

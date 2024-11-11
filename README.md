@@ -1,62 +1,57 @@
 
-# Federated Learning with Hydra Configuration
+# Federated Learning with Homomorphic Encryption
 
-This project demonstrates a **Federated Learning (FL)** setup using the **Flower (FLWR)** framework, configured with **Hydra** for dynamic control. It includes a standard FL client, a malicious client for parameter extraction, and a central server to orchestrate the learning process.
+This repository demonstrates a Federated Learning (FL) setup enhanced with Homomorphic Encryption to ensure the privacy of the model's parameters during transmission. It employs the Flower (flwr) framework for FL orchestration and TenSEAL for encryption, configured with a Hydra-based dynamic control system.
+
+## Malicious Client Simulation
+
+The `malicious_client.py` is not part of the main federated learning workflow but is used to simulate a security breach by extracting and saving model parameters transmitted by the server. This simulation highlights potential vulnerabilities in federated learning systems and underscores the importance of encrypting model parameters, which is implemented in this project.
 
 ## Project Structure
 
-- **`server.py`**: Script to launch the server for federated learning, which coordinates model updates from clients.
-- **`client.py`**: Script for standard FL clients that train locally and send model updates to the server.
-- **`malicious_client.py`**: A client designed to extract and save model parameters during training to test the system's security.
-- **`model.py`**: Defines the neural network model used by both clients.
-- **`conf/`**: Contains the Hydra configuration files for the server and strategy.
-  - **`server_config.yaml`**: Main server configuration, including the number of clients and rounds.
-  - **`strategy/`**: Configurations for different federated learning strategies (e.g., FedAvg).
-- **`extracted_parameters/`**: Directory where extracted model parameters are stored by the malicious client.
+- **`client.py`**: Contains the federated learning client logic. It trains the model locally, encrypts the parameters using homomorphic encryption, and communicates with the server.
+- **`server.py`**: The federated learning server which aggregates encrypted parameters from various clients and updates the global model.
+- **`malicious_client.py`**: A mock malicious client designed to simulate the extraction and saving of received model parameters, testing the security resilience of the FL setup.
+- **`model.py`**: Defines the neural network model architecture used in the federated learning clients.
+- **`utils.py`**: Includes utility functions and configurations for setting up the homomorphic encryption context using TenSEAL.
+- **`conf/base.yaml`**: Hydra configuration file defining server and strategy parameters like number of rounds, minimum clients, etc.
+- **`extracted_parameters/`**: Directory intended for storing parameters extracted by the malicious client.
+- **`output/`**: Directory where all metrics like accuracy and loss from each epoch are stored with date and timestamp as the filename.
 
 ## How to Run
 
-### 1. Install Dependencies
+### Preliminary Step
 
-Make sure you have the required dependencies:
+Before running the server and clients, execute the `utils.py` script to generate the necessary public and secret context pickle files:
 
 ```bash
-pip install -r requirements.txt
+python utils.py
 ```
 
-### 2. Run the FL Server
+### Run the FL Server
 
-To start the federated learning server:
+Start the federated learning server using:
 
 ```bash
 python server.py
 ```
 
-This will launch the server with the configuration specified in `conf/server_config.yaml`.
+This launches the server using settings defined in `conf/base.yaml`.
 
-### 3. Run FL Clients
+### Run FL Clients
 
-To start a federated learning client and connect it to the server:
-
-```bash
-python client.py
-```
-
-You can simulate multiple clients by running this command in multiple terminals.
-
-### 4. Run the Malicious Client
-
-To run the malicious client, which extracts and stores model parameters:
+To start a federated learning client:
 
 ```bash
-python malicious_client.py
+python client.py --label=<label_id>
 ```
 
-The extracted parameters will be saved in the `extracted_parameters/` directory.
+Replace `<label_id>` with the appropriate label for the client. Each client must be started with a specific label, and an error message will prompt you to specify a label if it is not provided.
 
-### 5. Customize Configuration
 
-You can customize the configuration by editing `conf/server_config.yaml` or by passing configuration overrides directly from the command line. For example, to run the server with custom parameters:
+### Customize Configuration
+
+Modify the configurations in `conf/base.yaml` to adjust server and client behavior. Command line overrides are also supported:
 
 ```bash
 python server.py server.num_rounds=5 server.min_fit_clients=4
@@ -64,10 +59,9 @@ python server.py server.num_rounds=5 server.min_fit_clients=4
 
 ## Key Configuration Options
 
-- **`server.num_rounds`**: Number of federated learning rounds.
-- **`server.min_fit_clients`**: Minimum number of clients required to start a training round.
-- **`server.min_eval_clients`**: Minimum number of clients required to perform evaluation.
-- **`strategy`**: Specifies the federated learning strategy (e.g., `FedAvg`).
+- **`server.num_rounds`**: The number of rounds the federated learning process should run.
+- **`server.min_fit_clients`**: The minimum number of clients required to start a training round.
+- **`server.min_eval_clients`**: The minimum number of clients required for evaluation.
+- **`strategy.name`**: The FL strategy to use (e.g., `FedAvg` with homomorphic encryption support).
 
 ---
-
