@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 import os
 import torch.nn as nn
 from model import Net
+from typing import List
 
 load_dotenv()
 
@@ -101,7 +102,7 @@ def test(net, testloader):
     accuracy = correct / total
     return val_loss / len(testloader), accuracy
 
-def load_data(label, num_clients=10):
+def load_data(labels: List[int]):
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,))
@@ -109,28 +110,32 @@ def load_data(label, num_clients=10):
 
     mnist_train = datasets.MNIST('data', train=True, download=True, transform=transform)
     mnist_test = datasets.MNIST('data', train=False, download=True, transform=transform)
-    
-    train_data = [(img, target) for img, target in mnist_train if target == label]
-    test_data = [(img, target) for img, target in mnist_test if target == label]
-    
+
+    train_data = [(img, target) for img, target in mnist_train if target in labels]
+    test_data = [(img, target) for img, target in mnist_test if target in labels]
+
+    print(f"Train data size: {len(train_data)}")
+    print(f"Test data size: {len(test_data)}")
+
     trainloader = DataLoader(train_data, batch_size=32, shuffle=True)
-    valloader = DataLoader(train_data, batch_size=32) 
+    valloader = DataLoader(train_data, batch_size=32)
     testloader = DataLoader(test_data, batch_size=32)
-    
+
     return trainloader, valloader, testloader
+
 
 def main():
     parser = argparse.ArgumentParser(description="Federated Learning Client")
-    parser.add_argument("--label", type=int, required=True, help="Label of data this client will handle")
+    parser.add_argument("--labels", nargs='+', type=int, required=True, help="Label of data this client will handle")
     args = parser.parse_args()
 
-    trainloader, valloader, testloader = load_data(args.label)
+    trainloader, valloader, testloader = load_data(args.labels)
     
     net = Net()
     
     fl.client.start_client(
         server_address=os.getenv("FL_SERVER_ADDRESS", "localhost:8080"),
-        client=HomomorphicFlowerClient(str(args.label), net, trainloader, valloader, testloader)
+        client=HomomorphicFlowerClient(str(args.labels), net, trainloader, valloader, testloader)
     )
 
 if __name__ == "__main__":
