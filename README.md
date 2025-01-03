@@ -49,13 +49,12 @@ python client.py --label=<label_id>
 Replace `<label_id>` with the appropriate label for the client. Each client must be started with a specific label, and an error message will prompt you to specify a label if it is not provided.
 
 
-### Customize Configuration
+### Output File
 
-Modify the configurations in `conf/base.yaml` to adjust server and client behavior. Command line overrides are also supported:
+The output timestamp file is defined in `outputs/`
 
-```bash
-python server.py server.num_rounds=5 server.min_fit_clients=4
-```
+
+
 
 ## Key Configuration Options
 
