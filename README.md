@@ -63,4 +63,11 @@ The output timestamp file is defined in `outputs/`
 - **`server.min_eval_clients`**: The minimum number of clients required for evaluation.
 - **`strategy.name`**: The FL strategy to use (e.g., `FedAvg` with homomorphic encryption support).
 
----
+
+
+
+
+## Demo Video
+#### Parameter or weight extraction using malicious clients 
+
+<iframe src="https://drive.google.com/file/d/1gDHrNcsQ7WFNMgnWbjVUdTmMqMwL4UKN/preview" width="640" height="480" allow="autoplay"></iframe>
