@@ -67,7 +67,12 @@ The output timestamp file is defined in `outputs/`
 
 
 
-## Demo Video
-#### Parameter or weight extraction using malicious clients 
+## Demo Videos
+### Parameter or weight extraction using malicious clients 
+This is not the main part of the project. Parameter extraction using a malicious client is used solely to demonstrate that data leakage can occur if a malicious client is connected to our server.
 
-<iframe src="https://drive.google.com/file/d/1gDHrNcsQ7WFNMgnWbjVUdTmMqMwL4UKN/preview" width="640" height="480" allow="autoplay"></iframe>
+[![Watch the Demo Video](https://img.youtube.com/vi/l6ROONTshtQ/0.jpg)](https://www.youtube.com/watch?v=l6ROONTshtQ)
+
+------
+### Federated Learning  Clients Server Aggregation
+[![Watch the Demo Video](https://img.youtube.com/vi/UILQhUqcR_g/0.jpg)](https://www.youtube.com/watch?v=UILQhUqcR_g)
