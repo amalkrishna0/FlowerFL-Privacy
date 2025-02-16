@@ -20,15 +20,31 @@ class HomomorphicFedAvg(FedAvg):
         self.client_accuracies = {}  # Track client accuracies
         self.flagged_clients = set()  # Store flagged clients
 
+    def configure_fit(self, server_round, parameters, client_manager):
+        """Exclude flagged clients from training."""
+        available_clients = list(client_manager.all().values())  # Get ClientProxy objects
+        filtered_clients = [client for client in available_clients if client.cid not in self.flagged_clients]
+        print(f"Available clients after filtering: {[c.cid for c in filtered_clients]}")
+
+        return super().configure_fit(server_round, parameters, client_manager)
+
+    def configure_evaluate(self, server_round, parameters, client_manager):
+        """Exclude flagged clients from evaluation."""
+        available_clients = list(client_manager.all().values())  # Fix client retrieval
+        filtered_clients = [client for client in available_clients if client.cid not in self.flagged_clients]
+        print(f"Available clients after filtering: {[c.cid for c in filtered_clients]}")
+
+        return super().configure_evaluate(server_round, parameters, client_manager)
+
     def aggregate_fit(self, server_round, results, failures):
         if not results:
             return None, {}
 
         encrypted_params = []
         weights = []
-        for client, fit_res in results:
-            # Display each client's accuracy and loss
-            cid = fit_res.metrics.get("cid")
+
+        for client_proxy, fit_res in results:  # Fix iteration
+            cid = client_proxy.cid  # Correct way to get client ID
             accuracy = fit_res.metrics.get("accuracy", 0.0)
             loss = fit_res.metrics.get("val_loss", 0.0)
             print(f"[Round {server_round}] Client {cid} - Accuracy: {accuracy:.4f}, Loss: {loss:.4f}")
@@ -48,8 +64,8 @@ class HomomorphicFedAvg(FedAvg):
             weights.append(fit_res.num_examples)
 
         # Update accuracies for client evaluation
-        for _, fit_res in results:
-            cid = fit_res.metrics.get("cid")
+        for client_proxy, fit_res in results:
+            cid = client_proxy.cid  # Fix incorrect cid retrieval
             accuracy = fit_res.metrics.get("accuracy")
             print(f"cid = {cid} accuracy={accuracy}")
 
@@ -65,8 +81,7 @@ class HomomorphicFedAvg(FedAvg):
                     if avg_accuracy < 0.5:  # Threshold for malicious client
                         self.flagged_clients.add(cid)
                         print(f"Client {cid} flagged as malicious!")
-                        for i in self.flagged_clients:
-                            print(f"THIS IS THE FLAGGED CLIENTS SET --- {i}")
+                        print(f"Flagged clients: {self.flagged_clients}")
 
         # Perform weighted aggregation only with non-flagged clients
         if not weights:  # Handle case where all clients are flagged
@@ -92,20 +107,20 @@ class HomomorphicFedAvg(FedAvg):
         total_samples = 0
 
         # Display each client's evaluation metrics
-        for client_id, fit_res in results:
-            # Check if the client is flagged
-            if client_id in self.flagged_clients:
-                print(f"Skipping flagged client {client_id} in evaluation")
+        for client_proxy, eval_res in results:  # Fix iteration
+            cid = client_proxy.cid
+            client_accuracy = eval_res.metrics.get("accuracy", 0.0)
+            client_val_loss = eval_res.metrics.get("val_loss", 0.0)
+
+            if cid in self.flagged_clients:
+                print(f"Skipping flagged client {cid} in evaluation")
                 continue
 
-            client_accuracy = fit_res.metrics.get("accuracy", 0.0)
-            client_val_loss = fit_res.metrics.get("val_loss", 0.0)
-            print(f"[Round {server_round}] Client {client_id} - Evaluation Loss: {client_val_loss:.4f}, Evaluation Accuracy: {client_accuracy:.4f}")
+            print(f"[Round {server_round}] Client {cid} - Evaluation Loss: {client_val_loss:.4f}, Evaluation Accuracy: {client_accuracy:.4f}")
 
-            # Aggregate results only from non-flagged clients
-            total_loss += client_val_loss * fit_res.num_examples
-            total_accuracy += client_accuracy * fit_res.num_examples
-            total_samples += fit_res.num_examples
+            total_loss += client_val_loss * eval_res.num_examples
+            total_accuracy += client_accuracy * eval_res.num_examples
+            total_samples += eval_res.num_examples
 
         # Avoid division by zero if all clients are flagged
         if total_samples > 0:
@@ -115,11 +130,9 @@ class HomomorphicFedAvg(FedAvg):
             average_loss = 0.0
             average_accuracy = 0.0
 
-        # Print the aggregated results
         print(f"Round {server_round} - Average loss: {average_loss:.4f}, Average accuracy: {average_accuracy:.4f}")
 
         return average_loss, {"accuracy": average_accuracy}
-
 
 
 @hydra.main(config_path="conf", config_name="base", version_base=None)
