@@ -53,7 +53,7 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         self.set_parameters(parameters)
         train(self.net, self.trainloader, epochs=5)
         val_loss, accuracy = test(self.net, self.valloader)
-        return self.get_parameters(config={}), len(self.trainloader.dataset), {"partition_id": self.cid,"cid": self.cid,"accuracy":float(accuracy)}
+        return self.get_parameters(config={}), len(self.trainloader.dataset), {"partition_id": self.cid,"cid": self.cid,"accuracy":float(accuracy),"loss":float(val_loss)}
 
     def evaluate(self, parameters, config):
         self.set_parameters(parameters)
