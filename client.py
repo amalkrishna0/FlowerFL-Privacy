@@ -15,6 +15,7 @@ import uuid
 
 
 # Load the secret context for homomorphic encryption
+# This ensures encrypted communication for model updates
 with open("secret_context.pkl", "rb") as f:
     secret_context = pickle.load(f)
 
@@ -22,7 +23,19 @@ context = ts.context_from(secret_context)
 
 
 class HomomorphicFlowerClient(fl.client.NumPyClient):
+
     def __init__(self, cid, net, trainloader, valloader, testloader, malicious=False):
+        """
+        Initializes the federated learning client with encryption capabilities.
+        
+        Args:
+            cid (str): Client ID
+            net (torch.nn.Module): Neural network model
+            trainloader (DataLoader): Training dataset loader
+            valloader (DataLoader): Validation dataset loader
+            testloader (DataLoader): Test dataset loader
+            malicious (bool): Flag indicating if the client is malicious
+        """
         self.cid = cid
         self.net = net
         self.trainloader = trainloader
@@ -30,12 +43,29 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         self.testloader = testloader
         self.malicious = malicious
 
+
+
     def get_parameters(self, config):
+        """
+        Retrieves model parameters and encrypts them using CKKS homomorphic encryption.
+        Args:
+            config (dict): Configuration parameters
+        Returns:
+            List: Encrypted model parameters
+        """
         params = [param.cpu().detach().numpy() for param in self.net.parameters()]
         encrypted_params = [ts.ckks_vector(context, param.flatten()).serialize() for param in params]
         return encrypted_params
 
+
+
     def set_parameters(self, parameters):
+        """
+        Decrypts and sets the received model parameters.
+        
+        Args:
+            parameters (List): Encrypted model parameters received from the server
+        """
         params = []
         for param in parameters:
             serialized_param = param.tobytes()
@@ -49,19 +79,53 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         state_dict = {k: torch.Tensor(v.reshape(self.net.state_dict()[k].shape)) for k, v in params_dict}
         self.net.load_state_dict(state_dict, strict=True)
 
+
+
+
     def fit(self, parameters, config):
+        """
+        Train the local model with the provided parameters and return updated parameters.
+        
+        Args:
+            parameters (List): Model parameters received from the server
+            config (dict): Training configuration parameters
+        
+        Returns:
+            Tuple: Updated model parameters, number of samples used, and client metadata
+        """
         self.set_parameters(parameters)
         train(self.net, self.trainloader, epochs=5)
         val_loss, accuracy = test(self.net, self.valloader)
         return self.get_parameters(config={}), len(self.trainloader.dataset), {"partition_id": self.cid,"cid": self.cid,"accuracy":float(accuracy),"loss":float(val_loss)}
 
+
+
+
     def evaluate(self, parameters, config):
+        """
+        Evaluate the local model on validation data and return metrics.
+        
+        Args:
+            parameters (List): Model parameters received from the server
+            config (dict): Configuration parameters
+        
+        Returns:
+            Tuple: Validation loss, number of samples used, and accuracy metrics
+        """
         self.set_parameters(parameters)
         val_loss, accuracy = test(self.net, self.valloader)
         return float(val_loss), len(self.valloader.dataset), {"val_loss": float(val_loss), "accuracy": float(accuracy), "cid": self.cid}
 
 
 def train(net, trainloader, epochs):
+    """
+    Train the local model on the given dataset.
+    
+    Args:
+        net (torch.nn.Module): Neural network model
+        trainloader (DataLoader): Training dataset loader
+        epochs (int): Number of training epochs
+    """
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
     net.train()
@@ -75,6 +139,16 @@ def train(net, trainloader, epochs):
 
 
 def test(net, testloader):
+    """
+    Evaluate the model on the given dataset.
+    
+    Args:
+        net (torch.nn.Module): Neural network model
+        testloader (DataLoader): Test dataset loader
+    
+    Returns:
+        Tuple: Validation loss and accuracy
+    """
     criterion = nn.CrossEntropyLoss()
     net.eval()
     val_loss = 0.0
@@ -92,6 +166,16 @@ def test(net, testloader):
 
 
 def load_data(labels, malicious=False):
+    """
+    Load and preprocess the MNIST dataset for the client.
+    
+    Args:
+        labels (List): List of labels this client should handle
+        malicious (bool): Whether to modify labels maliciously
+    
+    Returns:
+        Tuple: Trainloader, validation loader, testloader
+    """
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,))
