@@ -1,11 +1,17 @@
 
 # Federated Learning with Homomorphic Encryption
 
-This repository demonstrates a Federated Learning (FL) setup enhanced with Homomorphic Encryption to ensure the privacy of the model's parameters during transmission. It employs the Flower (flwr) framework for FL orchestration and TenSEAL for encryption, configured with a Hydra-based dynamic control system.
+This repository demonstrates a Federated Learning (FL) setup enhanced with Homomorphic Encryption to ensure the privacy of the model's parameters during transmission. It employs the Flower (flwr) framework for FL orchestration and TenSEAL for encryption, configured with a Hydra-based dynamic control system. Additionally, it includes an Invalid Client Detection mechanism to enhance the robustness of the system against malicious participants.
 
-## Malicious Client Simulation
+## Key Enhancements 
+### Malicious Client Simulation -
 
 The `malicious_client.py` is not part of the main federated learning workflow but is used to simulate a security breach by extracting and saving model parameters transmitted by the server. This simulation highlights potential vulnerabilities in federated learning systems and underscores the importance of encrypting model parameters, which is implemented in this project.
+
+
+### Invalid Client Detection - 
+The system can detect invalid (malicious) clients that consistently provide incorrect labels or underperform. Clients with low accuracy over multiple rounds are flagged and excluded from model aggregation.
+
 
 ## Project Structure
 
@@ -21,41 +27,40 @@ The `malicious_client.py` is not part of the main federated learning workflow bu
 ## How to Run
 
 ### Preliminary Step
-
-Before running the server and clients, execute the `utils.py` script to generate the necessary public and secret context pickle files:
-
+Before starting the server and clients, generate the necessary public and secret context files:
 ```bash
 python utils.py
 ```
 
 ### Run the FL Server
-
-Start the federated learning server using:
-
 ```bash
 python server.py
 ```
-
-This launches the server using settings defined in `conf/base.yaml`.
+The server is launched with configurations defined in `conf/base.yaml`.
 
 ### Run FL Clients
-
 To start a federated learning client:
-
 ```bash
-python client.py --label=<label_id>
+python client.py --labels <labels>
 ```
+Replace `<labels>` with the specific dataset labels assigned to the client.
 
-Replace `<label_id>` with the appropriate label for the client. Each client must be started with a specific label, and an error message will prompt you to specify a label if it is not provided.
+### Run an Invalid (Malicious) Client
+To start a client with incorrect labels (simulating an invalid client):
+```bash
+python client.py --labels <labels> --malicious
+```
+This client will be flagged and excluded from future rounds after detection.
 
+### Output Files
+- Training and evaluation metrics are stored in the `output/` directory.
+- Logs will display flagged clients and their exclusion status.
 
-### Output File
+## Invalid Client Detection (Server Logic)
 
-The output timestamp file is defined in `outputs/`
-
-
-
-
+- The server tracks client accuracies over multiple rounds.
+- If a client's average accuracy over the last three rounds is below a threshold (e.g., 0.5), it is flagged as an invalid client.
+- Flagged clients are excluded from both model aggregation and evaluation.
 ## Key Configuration Options
 
 - **`server.num_rounds`**: The number of rounds the federated learning process should run.
