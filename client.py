@@ -8,64 +8,73 @@ import tenseal as ts
 import pickle
 import argparse
 import os
-from model import Net
+from model import Net, Autoencoder
 import torch.nn as nn
 import random
 import uuid
 
-
 # Load the secret context for homomorphic encryption
-# This ensures encrypted communication for model updates
 with open("secret_context.pkl", "rb") as f:
     secret_context = pickle.load(f)
 
 context = ts.context_from(secret_context)
 
+MODEL_UPDATE_DIR = "model_updates"
+os.makedirs(MODEL_UPDATE_DIR, exist_ok=True)
+
+# Load the pre-trained autoencoder for anomaly detection
+INPUT_DIMS=93322
+autoencoder = Autoencoder(INPUT_DIMS)
+autoencoder.load_state_dict(torch.load("autoencoder/autoencoder.pth"))
+autoencoder.eval()
 
 class HomomorphicFlowerClient(fl.client.NumPyClient):
-
-    def __init__(self, cid, net, trainloader, valloader, testloader, malicious=False):
-        """
-        Initializes the federated learning client with encryption capabilities.
-        
-        Args:
-            cid (str): Client ID
-            net (torch.nn.Module): Neural network model
-            trainloader (DataLoader): Training dataset loader
-            valloader (DataLoader): Validation dataset loader
-            testloader (DataLoader): Test dataset loader
-            malicious (bool): Flag indicating if the client is malicious
-        """
+    def __init__(self, cid, net, trainloader, valloader, testloader, malicious=False, add_noise=False):
         self.cid = cid
         self.net = net
         self.trainloader = trainloader
         self.valloader = valloader
         self.testloader = testloader
         self.malicious = malicious
-
-
+        self.add_noise = add_noise
+        self.noise_level = 0.2 if add_noise else 0.0
 
     def get_parameters(self, config):
-        """
-        Retrieves model parameters and encrypts them using CKKS homomorphic encryption.
-        Args:
-            config (dict): Configuration parameters
-        Returns:
-            List: Encrypted model parameters
-        """
         params = [param.cpu().detach().numpy() for param in self.net.parameters()]
+        
+        # Apply constant noise if enabled
+        if self.add_noise:
+            params = [param + self.noise_level for param in params]
+            print(f"[CLIENT {self.cid}] Adding constant noise {self.noise_level} to model parameters.")
+        
+        self.save_model_update(params)
+        
+        # Check for anomalies using autoencoder
+        if self.is_anomalous(params):
+            print(f"[CLIENT {self.cid}] Anomaly detected in model parameters!")
+        
         encrypted_params = [ts.ckks_vector(context, param.flatten()).serialize() for param in params]
         return encrypted_params
+    
+    def is_anomalous(self, params):
+        params_tensor = torch.tensor(np.concatenate([p.flatten() for p in params]), dtype=torch.float32)
+        reconstructed = autoencoder(params_tensor)
+        loss = torch.nn.functional.mse_loss(reconstructed, params_tensor)
+        return loss.item() > 0.0001  # Threshold can be adjusted
 
+    def save_model_update(self, params):
+        """Save model parameters locally for tracking purposes."""
+        file_path = os.path.join(MODEL_UPDATE_DIR, f"client_{self.cid}_update.npy")
+        
+        # Ensure all parameters are NumPy arrays and flatten them
+        processed_params = [np.array(p).flatten() for p in params]
+        
+        # Convert the list of arrays into a single array
+        np.save(file_path, np.array(processed_params, dtype=object))
 
+        print(f"[CLIENT {self.cid}] Model update saved to {file_path}")
 
     def set_parameters(self, parameters):
-        """
-        Decrypts and sets the received model parameters.
-        
-        Args:
-            parameters (List): Encrypted model parameters received from the server
-        """
         params = []
         for param in parameters:
             serialized_param = param.tobytes()
@@ -74,48 +83,21 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
             decrypted_param = ckks_vector.decrypt()
             decrypted_param = np.array(decrypted_param)
             params.append(decrypted_param)
-
+        
         params_dict = zip(self.net.state_dict().keys(), params)
         state_dict = {k: torch.Tensor(v.reshape(self.net.state_dict()[k].shape)) for k, v in params_dict}
         self.net.load_state_dict(state_dict, strict=True)
 
-
-
-
     def fit(self, parameters, config):
-        """
-        Train the local model with the provided parameters and return updated parameters.
-        
-        Args:
-            parameters (List): Model parameters received from the server
-            config (dict): Training configuration parameters
-        
-        Returns:
-            Tuple: Updated model parameters, number of samples used, and client metadata
-        """
         self.set_parameters(parameters)
         train(self.net, self.trainloader, epochs=5)
         val_loss, accuracy = test(self.net, self.valloader)
-        return self.get_parameters(config={}), len(self.trainloader.dataset), {"partition_id": self.cid,"cid": self.cid,"accuracy":float(accuracy),"loss":float(val_loss)}
-
-
-
-
-    def evaluate(self, parameters, config):
-        """
-        Evaluate the local model on validation data and return metrics.
-        
-        Args:
-            parameters (List): Model parameters received from the server
-            config (dict): Configuration parameters
-        
-        Returns:
-            Tuple: Validation loss, number of samples used, and accuracy metrics
-        """
-        self.set_parameters(parameters)
-        val_loss, accuracy = test(self.net, self.valloader)
-        return float(val_loss), len(self.valloader.dataset), {"val_loss": float(val_loss), "accuracy": float(accuracy), "cid": self.cid}
-
+        return self.get_parameters(config={}), len(self.trainloader.dataset), {
+            "partition_id": self.cid,
+            "cid": self.cid,
+            "accuracy": float(accuracy),
+            "loss": float(val_loss)
+        }
 
 def train(net, trainloader, epochs):
     """
@@ -204,16 +186,17 @@ def main():
     parser = argparse.ArgumentParser(description="Federated Learning Client")
     parser.add_argument("--labels", nargs='+', type=int, required=True, help="Label of data this client will handle")
     parser.add_argument("--malicious", action="store_true", help="Enable malicious client behavior")
+    parser.add_argument("--noise", action="store_true", help="Enable adding constant noise to model parameters")
     args = parser.parse_args()
 
     trainloader, valloader, testloader = load_data(args.labels, malicious=args.malicious)
     net = Net()
-
+    
     fl.client.start_client(
         server_address=os.getenv("FL_SERVER_ADDRESS", "localhost:8080"),
-        client=HomomorphicFlowerClient(str(args.labels), net, trainloader, valloader, testloader, malicious=args.malicious)
+        client=HomomorphicFlowerClient(str(args.labels), net, trainloader, valloader, testloader, malicious=args.malicious, add_noise=args.noise)
     )
-
 
 if __name__ == "__main__":
     main()
+
