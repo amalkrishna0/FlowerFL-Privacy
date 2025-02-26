@@ -6,3 +6,6 @@ data
 start_client.ps1
 secret_context.pkl
 public_context.pkl
+graph.py
+client_accuracy_plot.png
+model_updates/
