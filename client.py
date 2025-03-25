@@ -12,7 +12,8 @@ from model import Net
 import torch.nn as nn
 import random
 import uuid
-
+import time
+from model import Autoencoder  # Import your autoencoder model
 
 # Load the secret context for homomorphic encryption
 # This ensures encrypted communication for model updates
@@ -21,7 +22,11 @@ with open("secret_context.pkl", "rb") as f:
 
 context = ts.context_from(secret_context)
 
-
+MODEL_PATH="model_updates"
+# Load trained autoencoder
+autoencoder = Autoencoder(93322)
+autoencoder.load_state_dict(torch.load("autoencoder.pth"))
+autoencoder.eval()
 class HomomorphicFlowerClient(fl.client.NumPyClient):
 
     def __init__(self, cid, net, trainloader, valloader, testloader, malicious=False):
@@ -54,6 +59,7 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
             List: Encrypted model parameters
         """
         params = [param.cpu().detach().numpy() for param in self.net.parameters()]
+        self.save_model_update(params,MODEL_PATH)
         encrypted_params = [ts.ckks_vector(context, param.flatten()).serialize() for param in params]
         return encrypted_params
 
@@ -96,10 +102,20 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         self.set_parameters(parameters)
         train(self.net, self.trainloader, epochs=5)
         val_loss, accuracy = test(self.net, self.valloader)
-        return self.get_parameters(config={}), len(self.trainloader.dataset), {"partition_id": self.cid,"cid": self.cid,"accuracy":float(accuracy),"loss":float(val_loss)}
+        print(f"Config received: {config}")  # Debugging
+        latent_representation = self.extract_latent_representation(self.net)
+        print("TYPE LATENT",type(latent_representation))
+        np.save(f"latent_representations/client_{self.cid}.npy", latent_representation)
+
+        return self.get_parameters(config={}), len(self.trainloader.dataset), {"partition_id": self.cid,"cid": self.cid,"accuracy":float(accuracy),"loss":float(val_loss),"latent_representation": f"latent_representations/client_{self.cid}.npy"}
 
 
-
+    def extract_latent_representation(self,model):
+        params = [param.cpu().detach().numpy().flatten() for param in model.parameters()]
+        params_tensor = torch.tensor(np.concatenate(params), dtype=torch.float32)
+        with torch.no_grad():
+            latent_representation = autoencoder.encoder(params_tensor)
+        return latent_representation.numpy()
 
     def evaluate(self, parameters, config):
         """
@@ -115,6 +131,23 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         self.set_parameters(parameters)
         val_loss, accuracy = test(self.net, self.valloader)
         return float(val_loss), len(self.valloader.dataset), {"val_loss": float(val_loss), "accuracy": float(accuracy), "cid": self.cid}
+    
+    def save_model_update(self, params,path):
+        """Save model parameters locally as a pickle file with a timestamp."""
+
+        timestamp = time.strftime("%Y%m%d_%H%M%S")  # Format: YYYYMMDD_HHMMSS
+        os.makedirs(path, exist_ok=True)  # Ensure directory exists
+
+        file_path = os.path.join(path, f"client_{self.cid}_update_{timestamp}.pkl")
+
+        try:
+            with open(file_path, "wb") as f:
+                pickle.dump(params, f)  # Save model parameters as pickle
+            print(f"[CLIENT {self.cid}] Model update saved to {file_path}")
+        except Exception as e:
+            print(f"[CLIENT {self.cid}] ERROR: Failed to save model update - {e}")
+
+
 
 
 def train(net, trainloader, epochs):

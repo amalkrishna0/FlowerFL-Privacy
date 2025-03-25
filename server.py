@@ -5,13 +5,19 @@ from omegaconf import DictConfig
 import tenseal as ts
 import pickle
 from flwr.server.strategy import FedAvg
-
+import numpy as np
+from model import Autoencoder
+import torch
 # Load the public homomorphic encryption context from a file
 with open("public_context.pkl", "rb") as f:
     public_context = pickle.load(f)
 
 # Initialize the encryption context from the loaded data
 context = ts.context_from(public_context)
+
+autoencoder = Autoencoder(93322)
+autoencoder.load_state_dict(torch.load("autoencoder.pth"))
+autoencoder.eval()
 
 class HomomorphicFedAvg(FedAvg):
     def __init__(self, *args, **kwargs):
@@ -40,17 +46,29 @@ class HomomorphicFedAvg(FedAvg):
 
         encrypted_params = []  # Store encrypted model parameters from clients
         weights = []  # Store weights (number of samples per client) for aggregation
+        latent_representations = {}  # Store latent representations
+        anomalies = set()  # Track anomalous clients
 
         for client_proxy, fit_res in results:
             cid = client_proxy.cid  # Retrieve client ID
             accuracy = fit_res.metrics.get("accuracy", 0.0)
-            loss = fit_res.metrics.get("val_loss", 0.0)
+            loss = fit_res.metrics.get("loss", 0.0)  # Fix: was "val_loss" but should be "loss"
+            latent_path = fit_res.metrics.get("latent_representation", None)  # File path
+
             print(f"[Round {server_round}] Client {cid} - Accuracy: {accuracy:.4f}, Loss: {loss:.4f}")
 
             # Skip aggregation for flagged clients
             if cid in self.flagged_clients:
                 print(f"Skipping flagged client {cid}")
                 continue
+
+            # ✅ Load Latent Representation from File
+            if latent_path and os.path.exists(latent_path):
+                latent_representations[cid] = np.load(latent_path)
+                print(f"Loaded latent representation from {latent_path} for Client {cid}")
+            else:
+                print(f"⚠️ Warning: Latent representation file not found for Client {cid}")
+                latent_representations[cid] = None  # Handle missing data gracefully
 
             # Deserialize encrypted parameters from the client
             client_params = []
@@ -60,6 +78,27 @@ class HomomorphicFedAvg(FedAvg):
                 client_params.append(ckks_vector)
             encrypted_params.append(client_params)
             weights.append(fit_res.num_examples)
+
+        # ✅ OPTIONAL: Use Latent Representations for Anomaly Detection
+        # You can process latent_representations here to identify anomalous clients
+        anomaly_threshold = 0.05  # Adjust this based on experiments
+        for cid, latent in latent_representations.items():
+            if latent is None:
+                continue  # Skip if no latent representation
+
+            latent_tensor = torch.tensor(latent, dtype=torch.float32).unsqueeze(0)  # Convert to tensor
+            reconstructed = autoencoder.decoder(latent_tensor)  # Pass through autoencoder
+            latent_reconstructed = autoencoder.encoder(reconstructed)  # Encode reconstructed output
+            reconstruction_error = torch.mean((latent_tensor - latent_reconstructed) ** 2).item()  # Compute error
+
+            print(f"Client {cid} Reconstruction Error: {reconstruction_error:.6f}")
+
+            # Flag clients as anomalous if error is high
+            if reconstruction_error > anomaly_threshold:
+                anomalies.add(cid)
+                print(f"🚨 Client {cid} flagged as anomalous! Reconstruction Error: {reconstruction_error:.6f}")
+            else:
+                print(f"🚨 Client {cid} NOT flagged as anomalous! Reconstruction Error: {reconstruction_error:.6f}")
 
         # Track client accuracies for malicious client detection
         for client_proxy, fit_res in results:
@@ -93,6 +132,7 @@ class HomomorphicFedAvg(FedAvg):
 
         # Serialize aggregated encrypted parameters for transmission
         aggregated_serialized = [param.serialize() for param in aggregated_params]
+        
         return fl.common.ndarrays_to_parameters(aggregated_serialized), {}
 
     def aggregate_evaluate(self, server_round, results, failures):
