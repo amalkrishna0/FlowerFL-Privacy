@@ -6,3 +6,11 @@ data
 start_client.ps1
 secret_context.pkl
 public_context.pkl
+graphs
+autoencoder
+hel.ipynb
+latent_representations
+latent_representations(imp)
+model_updates
+model_updates(LEGIT CLIENTs)
+aa.py
