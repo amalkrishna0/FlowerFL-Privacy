@@ -61,7 +61,7 @@ full_train_dataset = torch.cat([train_dataset, train_abnormal_dataset])
 input_dim = full_train_dataset.shape[1]  # Set input_dim dynamically
 
 # Define Autoencoder model
-autoencoder = Autoencoder(input_dim=input_dim, latent_dim=64)
+autoencoder = Autoencoder(input_dim=input_dim, latent_dim=1024)
 optimizer = optim.Adam(autoencoder.parameters(), lr=0.001)
 criterion = nn.MSELoss()
 
