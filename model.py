@@ -21,3 +21,27 @@ class Net(nn.Module):
         x = self.dropout(x)
         x = self.fc2(x)
         return F.log_softmax(x, dim=1)
+    
+class Autoencoder(nn.Module):
+    def __init__(self, input_dim, latent_dim=1024):
+        super(Autoencoder, self).__init__()
+        self.encoder = nn.Sequential(
+            nn.Linear(input_dim, 512),
+            nn.ReLU(),
+            nn.Linear(512, 256),
+            nn.ReLU(),
+            nn.Linear(256, latent_dim)  # Latent representation
+        )
+        self.decoder = nn.Sequential(
+            nn.Linear(latent_dim, 256),
+            nn.ReLU(),
+            nn.Linear(256, 512),
+            nn.ReLU(),
+            nn.Linear(512, input_dim),
+            nn.Sigmoid()  # Normalize output
+        )
+
+    def forward(self, x):
+        latent = self.encoder(x)
+        reconstructed = self.decoder(latent)
+        return latent, reconstructed
