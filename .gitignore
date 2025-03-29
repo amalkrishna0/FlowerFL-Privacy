@@ -14,3 +14,8 @@ latent_representations(imp)
 model_updates
 model_updates(LEGIT CLIENTs)
 aa.py
+best_autoencoder.pth
+best_autoencoder_2.pth
+GAN.py
+model_abnormal
+log.txt
