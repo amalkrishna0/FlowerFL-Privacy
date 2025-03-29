@@ -16,7 +16,7 @@ with open("public_context.pkl", "rb") as f:
 context = ts.context_from(public_context)
 
 autoencoder = Autoencoder(93322)
-autoencoder.load_state_dict(torch.load("autoencoder.pth"))
+autoencoder.load_state_dict(torch.load("best_autoencoder_2.pth"))
 autoencoder.eval()
 
 class HomomorphicFedAvg(FedAvg):
@@ -24,7 +24,9 @@ class HomomorphicFedAvg(FedAvg):
         super().__init__(*args, **kwargs)
         self.client_accuracies = {}  # Dictionary to track client accuracies across rounds
         self.flagged_clients = set()  # Set to store clients flagged as malicious
-
+        self.client_anomaly_counts = {}  # Track anomaly counts
+        self.anomaly_threshold = 0.01  # Initial threshold
+        self.max_reconstruction_error = 0.01  # Dynamic thresholding variable
     def configure_fit(self, server_round, parameters, client_manager):
         """Configure the next round of training, excluding flagged clients."""
         available_clients = list(client_manager.all().values())  # Retrieve all clients
@@ -52,25 +54,24 @@ class HomomorphicFedAvg(FedAvg):
         for client_proxy, fit_res in results:
             cid = client_proxy.cid  # Retrieve client ID
             accuracy = fit_res.metrics.get("accuracy", 0.0)
-            loss = fit_res.metrics.get("loss", 0.0)  # Fix: was "val_loss" but should be "loss"
-            latent_path = fit_res.metrics.get("latent_representation", None)  # File path
+            loss = fit_res.metrics.get("loss", 0.0)
 
             print(f"[Round {server_round}] Client {cid} - Accuracy: {accuracy:.4f}, Loss: {loss:.4f}")
 
-            # Skip aggregation for flagged clients
             if cid in self.flagged_clients:
                 print(f"Skipping flagged client {cid}")
                 continue
 
-            # ✅ Load Latent Representation from File
+            # Load latent representation from file
+            latent_path = fit_res.metrics.get("latent_representation", None)
             if latent_path and os.path.exists(latent_path):
                 latent_representations[cid] = np.load(latent_path)
                 print(f"Loaded latent representation from {latent_path} for Client {cid}")
             else:
                 print(f"⚠️ Warning: Latent representation file not found for Client {cid}")
-                latent_representations[cid] = None  # Handle missing data gracefully
+                latent_representations[cid] = None
 
-            # Deserialize encrypted parameters from the client
+            # Deserialize encrypted parameters
             client_params = []
             for param in fl.common.parameters_to_ndarrays(fit_res.parameters):
                 ckks_vector = ts.lazy_ckks_vector_from(param.tobytes())
@@ -79,32 +80,34 @@ class HomomorphicFedAvg(FedAvg):
             encrypted_params.append(client_params)
             weights.append(fit_res.num_examples)
 
-        # ✅ OPTIONAL: Use Latent Representations for Anomaly Detection
-        # You can process latent_representations here to identify anomalous clients
-        anomaly_threshold = 0.05  # Adjust this based on experiments
+        # ✅ Perform anomaly detection based on reconstruction error
         for cid, latent in latent_representations.items():
             if latent is None:
                 continue  # Skip if no latent representation
 
-            latent_tensor = torch.tensor(latent, dtype=torch.float32).unsqueeze(0)  # Convert to tensor
-            reconstructed = autoencoder.decoder(latent_tensor)  # Pass through autoencoder
-            latent_reconstructed = autoencoder.encoder(reconstructed)  # Encode reconstructed output
-            reconstruction_error = torch.mean((latent_tensor - latent_reconstructed) ** 2).item()  # Compute error
+            latent_tensor = torch.tensor(latent, dtype=torch.float32).unsqueeze(0)
+            reconstructed = autoencoder.decoder(latent_tensor)
+            latent_reconstructed = autoencoder.encoder(reconstructed)
+            reconstruction_error = torch.mean((latent_tensor - latent_reconstructed) ** 2).item()
 
             print(f"Client {cid} Reconstruction Error: {reconstruction_error:.6f}")
+            if (server_round>=15):
+                if reconstruction_error > self.anomaly_threshold:
+                    self.client_anomaly_counts[cid] = self.client_anomaly_counts.get(cid, 0) + 1
+                    if self.client_anomaly_counts[cid] >= 4:  # Flag client permanently
+                        self.flagged_clients.add(cid)
+                        self.max_reconstruction_error = max(self.max_reconstruction_error, reconstruction_error)
+                        self.anomaly_threshold = self.max_reconstruction_error  # Update threshold dynamically
+                        print(f"🚨 Client {cid} flagged! New anomaly threshold: {self.anomaly_threshold:.6f}")
+                    else:
+                        print(f"⚠️Client {cid} reconstruction error greater than threshold : ({self.client_anomaly_counts[cid]}/{4})")
+                else:
+                    print(f"✅ Client {cid} passed anomaly check.")
 
-            # Flag clients as anomalous if error is high
-            if reconstruction_error > anomaly_threshold:
-                anomalies.add(cid)
-                print(f"🚨 Client {cid} flagged as anomalous! Reconstruction Error: {reconstruction_error:.6f}")
-            else:
-                print(f"🚨 Client {cid} NOT flagged as anomalous! Reconstruction Error: {reconstruction_error:.6f}")
-
-        # Track client accuracies for malicious client detection
+        # ✅ Track client accuracies for malicious detection
         for client_proxy, fit_res in results:
             cid = client_proxy.cid
             accuracy = fit_res.metrics.get("accuracy")
-            print(f"cid = {cid} accuracy={accuracy}")
 
             if cid:
                 self.client_accuracies.setdefault(cid, []).append(accuracy)
@@ -122,18 +125,20 @@ class HomomorphicFedAvg(FedAvg):
             print("No clients available for aggregation. Returning None.")
             return None, {}
 
-        # Perform weighted aggregation of encrypted parameters
+        # Perform weighted aggregation
         total_examples = sum(weights)
         normalized_weights = [w / total_examples for w in weights]
         aggregated_params = [param * normalized_weights[0] for param in encrypted_params[0]]
+
         for client_params, weight in zip(encrypted_params[1:], normalized_weights[1:]):
             for i in range(len(aggregated_params)):
                 aggregated_params[i] += client_params[i] * weight
 
-        # Serialize aggregated encrypted parameters for transmission
+        # Serialize aggregated encrypted parameters
         aggregated_serialized = [param.serialize() for param in aggregated_params]
-        
+
         return fl.common.ndarrays_to_parameters(aggregated_serialized), {}
+
 
     def aggregate_evaluate(self, server_round, results, failures):
         """Aggregate evaluation metrics from clients, excluding flagged clients."""
