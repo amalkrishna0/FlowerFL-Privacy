@@ -8,6 +8,26 @@ from flwr.server.strategy import FedAvg
 import numpy as np
 from model import Autoencoder
 import torch
+
+
+import logging
+import sys
+
+# Ensure UTF-8 encoding for logging and print outputs
+sys.stdout = open("log.txt", "w", encoding="utf-8")
+sys.stderr = sys.stdout  # Redirect errors to the same file
+
+# Configure logging (Flower logs + custom logs)
+logging.basicConfig(
+    filename="log.txt", 
+    filemode="w",  # Overwrite previous logs
+    encoding="utf-8",  # Fix Unicode issues
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    level=logging.INFO
+)
+
+
+
 # Load the public homomorphic encryption context from a file
 with open("public_context.pkl", "rb") as f:
     public_context = pickle.load(f)
