@@ -18,4 +18,8 @@ best_autoencoder.pth
 best_autoencoder_2.pth
 GAN.py
 model_abnormal
-log.txt
+model_updates_for_3_client_legit
+model_updates_for_3_client_not_legit
+autoencoder_new.pth
+new_train.ipynb
+log_files

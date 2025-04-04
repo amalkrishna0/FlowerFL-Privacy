@@ -1,8 +1,8 @@
 server:
-  num_rounds: 30              
-  min_fit_clients: 5
-  min_eval_clients: 5           
-  min_available_clients: 5
+  num_rounds: 40        
+  min_fit_clients: 3
+  min_eval_clients: 3         
+  min_available_clients: 3
       
   
 

@@ -8,6 +8,54 @@ from flwr.server.strategy import FedAvg
 import numpy as np
 from model import Autoencoder
 import torch
+
+
+import logging
+import sys
+class DualOutput:
+    """Custom stream class to write to both stdout and a log file."""
+    
+    def __init__(self, file_path):
+        self.terminal = sys.stdout  # Store original stdout
+        self.log = open(file_path, "w", encoding="utf-8", buffering=1)
+
+    def write(self, message):
+        self.terminal.write(message)  # Print to terminal
+        self.log.write(message)  # Write to log file
+
+    def flush(self):
+        self.terminal.flush()
+        self.log.flush()
+    
+# Define log format
+log_format = "%(asctime)s - %(levelname)s - %(message)s"
+
+# Create a file handler (writes logs to log.txt)
+file_handler = logging.FileHandler("log.txt", mode="w", encoding="utf-8")
+file_handler.setFormatter(logging.Formatter(log_format))
+
+# Create a console handler (prints logs to terminal)
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setFormatter(logging.Formatter(log_format))
+
+# Get the Flower logger and add handlers
+flower_logger = logging.getLogger("flwr")
+flower_logger.setLevel(logging.INFO)
+flower_logger.addHandler(file_handler)
+flower_logger.addHandler(console_handler)
+
+# Also add handlers to the root logger (for custom logs)
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.INFO)
+root_logger.addHandler(file_handler)
+root_logger.addHandler(console_handler)
+
+# Redirect stdout and stderr to DualOutput, so both print() and logging work
+sys.stdout = DualOutput("log.txt")
+sys.stderr = sys.stdout
+
+
+
 # Load the public homomorphic encryption context from a file
 with open("public_context.pkl", "rb") as f:
     public_context = pickle.load(f)
@@ -16,7 +64,7 @@ with open("public_context.pkl", "rb") as f:
 context = ts.context_from(public_context)
 
 autoencoder = Autoencoder(93322)
-autoencoder.load_state_dict(torch.load("best_autoencoder_2.pth"))
+autoencoder.load_state_dict(torch.load("autoencoder_new.pth", map_location=torch.device('cpu')))
 autoencoder.eval()
 
 class HomomorphicFedAvg(FedAvg):
@@ -25,8 +73,10 @@ class HomomorphicFedAvg(FedAvg):
         self.client_accuracies = {}  # Dictionary to track client accuracies across rounds
         self.flagged_clients = set()  # Set to store clients flagged as malicious
         self.client_anomaly_counts = {}  # Track anomaly counts
-        self.anomaly_threshold = 0.01  # Initial threshold
-        self.max_reconstruction_error = 0.01  # Dynamic thresholding variable
+        self.min_anomaly_threshold =0.5 # Initial threshold
+        self.max_anomaly_threshold =0.8 # Initial threshold
+        self.max_reconstruction_error = 0.8  # Dynamic thresholding variable
+        
     def configure_fit(self, server_round, parameters, client_manager):
         """Configure the next round of training, excluding flagged clients."""
         available_clients = list(client_manager.all().values())  # Retrieve all clients
@@ -92,7 +142,7 @@ class HomomorphicFedAvg(FedAvg):
 
             print(f"Client {cid} Reconstruction Error: {reconstruction_error:.6f}")
             if (server_round>=15):
-                if reconstruction_error > self.anomaly_threshold:
+                if reconstruction_error > self.max_anomaly_threshold or reconstruction_error < self.min_anomaly_threshold:
                     self.client_anomaly_counts[cid] = self.client_anomaly_counts.get(cid, 0) + 1
                     if self.client_anomaly_counts[cid] >= 4:  # Flag client permanently
                         self.flagged_clients.add(cid)
@@ -116,7 +166,7 @@ class HomomorphicFedAvg(FedAvg):
                 if len(self.client_accuracies[cid]) >= 3:
                     recent_accuracies = self.client_accuracies[cid][-3:]
                     avg_accuracy = sum(recent_accuracies) / len(recent_accuracies)
-                    if avg_accuracy < 0.5:
+                    if avg_accuracy < 0.3:
                         self.flagged_clients.add(cid)
                         print(f"Client {cid} flagged as malicious!")
 

@@ -25,20 +25,25 @@ class Net(nn.Module):
 class Autoencoder(nn.Module):
     def __init__(self, input_dim, latent_dim=1024):
         super(Autoencoder, self).__init__()
+
+        # Encoder
         self.encoder = nn.Sequential(
-            nn.Linear(input_dim, 512),
+            nn.Linear(input_dim, 1024),
             nn.ReLU(),
-            nn.Linear(512, 256),
+            nn.Linear(1024, 512),
             nn.ReLU(),
-            nn.Linear(256, latent_dim)  # Latent representation
+            nn.Linear(512, latent_dim),
+            nn.Tanh()  # Prevent extreme values in latent space
         )
+
+        # Decoder
         self.decoder = nn.Sequential(
-            nn.Linear(latent_dim, 256),
+            nn.Linear(latent_dim, 512),
             nn.ReLU(),
-            nn.Linear(256, 512),
+            nn.Linear(512, 1024),
             nn.ReLU(),
-            nn.Linear(512, input_dim),
-            nn.Sigmoid()  # Normalize output
+            nn.Linear(1024, input_dim),
+            nn.Sigmoid()  # Keep output in range [0,1]
         )
 
     def forward(self, x):

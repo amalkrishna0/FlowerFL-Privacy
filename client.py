@@ -2,7 +2,8 @@ import flwr as fl
 import torch
 from torch import optim
 from torchvision import datasets, transforms
-from torch.utils.data import DataLoader
+
+from torch.utils.data import DataLoader,random_split
 import numpy as np
 import tenseal as ts
 import pickle
@@ -14,6 +15,7 @@ import random
 import uuid
 import time
 from model import Autoencoder  # Import your autoencoder model
+from collections import Counter
 
 # Load the secret context for homomorphic encryption
 # This ensures encrypted communication for model updates
@@ -22,10 +24,10 @@ with open("secret_context.pkl", "rb") as f:
 
 context = ts.context_from(secret_context)
 
-MODEL_PATH="model_updates"
+MODEL_PATH="model_updates_for_3_client_not_legit"
 # Load trained autoencoder
 autoencoder = Autoencoder(93322)
-autoencoder.load_state_dict(torch.load("best_autoencoder_2.pth"))
+autoencoder.load_state_dict(torch.load("autoencoder_new.pth", map_location=torch.device('cpu')))
 autoencoder.eval()
 
 class HomomorphicFlowerClient(fl.client.NumPyClient):
@@ -49,7 +51,9 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         self.testloader = testloader
         self.malicious = malicious
         self.noise = noise  # New flag for adding noise
-
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")   
+        # Move the model to the correct device
+        self.net.to(self.device)
 
 
     def get_parameters(self, config):
@@ -74,7 +78,7 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
 
         if self.noise:
             # 🔹 Step 3: Add Perturbation (Gaussian Noise)
-            self.perturb_params(saved_params, noise_level=0.04)
+            saved_params = self.perturb_params(saved_params, noise_level=0.2)
 
             print(f"✅ Model parameters have been perturbed for {file_name}.")
 
@@ -83,14 +87,30 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         
         return encrypted_params
 
+
+    def add_structured_noise(self, tensor, noise_factor):
+        """Applies structured noise by flipping, scaling, and shifting."""
+        noise = torch.randn_like(tensor) * torch.std(tensor) * noise_factor  # Gaussian noise
+        flip_mask = torch.randint(0, 2, tensor.shape, dtype=torch.bool, device=tensor.device)  # Random flipping
+        scale_mask = 1 + (torch.rand_like(tensor) - 0.5) * 0.2  # Small random scaling
+
+        noisy_tensor = tensor + noise  # Add Gaussian noise
+        noisy_tensor[flip_mask] *= -1  # Randomly flip signs
+        noisy_tensor *= scale_mask  # Apply scaling
+
+        return noisy_tensor
+    
+
     def perturb_params(self, params, noise_level):
+        """Applies structured noise by flipping, scaling, and shifting."""
         perturbed_params = []
         for param in params:
             param_tensor = torch.tensor(param)  # Ensure it's a tensor
-            noise = torch.randn_like(param_tensor) * noise_level
-            perturbed_params.append(param_tensor + noise)
+            noisy_param = self.add_structured_noise(param_tensor, noise_level)
+            perturbed_params.append(noisy_param)
         return perturbed_params
 
+    
 
     def set_parameters(self, parameters):
         """
@@ -127,22 +147,36 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
             Tuple: Updated model parameters, number of samples used, and client metadata
         """
         self.set_parameters(parameters)
-        train(self.net, self.trainloader, epochs=5)
+        train(self.net, self.trainloader, self.valloader ,  epochs=10)
         val_loss, accuracy = test(self.net, self.valloader)
         print(f"Config received: {config}")  # Debugging
-        latent_representation = self.extract_latent_representation(self.net)
+        if self.noise:
+            latent_representation = self.extract_latent_representation(self.net, apply_noise=True, noise_factor=0.2)
+        else:
+            latent_representation = self.extract_latent_representation(self.net, apply_noise=False, noise_factor=0.2)
         print("TYPE LATENT",type(latent_representation))
         np.save(f"latent_representations/client_{self.cid}.npy", latent_representation)
 
         return self.get_parameters(config={}), len(self.trainloader.dataset), {"partition_id": self.cid,"cid": self.cid,"accuracy":float(accuracy),"loss":float(val_loss),"latent_representation": f"latent_representations/client_{self.cid}.npy"}
 
 
-    def extract_latent_representation(self,model):
+    def extract_latent_representation(self, model, apply_noise=True, noise_factor=0.2):
+        """
+        Extracts the latent representation of model parameters.
+        Applies structured noise before encoding if apply_noise is True.
+        """
         params = [param.cpu().detach().numpy().flatten() for param in model.parameters()]
-        params_tensor = torch.tensor(np.concatenate(params), dtype=torch.float32)
+        params_tensor = torch.tensor(np.concatenate(params), dtype=torch.float32, device=self.device)
+
+        # ✅ Apply structured noise before encoding (to match first case)
+        if apply_noise:
+            params_tensor = self.add_structured_noise(params_tensor, noise_factor)
+
         with torch.no_grad():
             latent_representation = autoencoder.encoder(params_tensor)
+
         return latent_representation.numpy()
+
 
     def evaluate(self, parameters, config):
         """
@@ -165,7 +199,7 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         timestamp = time.strftime("%Y%m%d_%H%M%S")  # Format: YYYYMMDD_HHMMSS
         os.makedirs(path, exist_ok=True)  # Ensure directory exists
 
-        file_name = f"client_{self.cid}_update_{timestamp}.pkl"
+        file_name = f"client_update_{timestamp}.pkl"
         file_path = os.path.join(path, file_name)
 
         try:
@@ -179,7 +213,7 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
 
 
 
-def train(net, trainloader, epochs):
+def train(net, trainloader, valloader, epochs):
     """
     Train the local model on the given dataset.
     
@@ -189,15 +223,38 @@ def train(net, trainloader, epochs):
         epochs (int): Number of training epochs
     """
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+    optimizer = optim.Adam(net.parameters(), lr=0.001)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3, verbose=True)
+    early_stopping_patience = 5  # Stop training if validation loss does not improve for 5 epochs
+    best_val_loss = float('inf')
+    early_stop_count = 0
+
     net.train()
-    for _ in range(epochs):
+    for epoch in range(epochs):
+        running_loss = 0.0
         for images, labels in trainloader:
             optimizer.zero_grad()
             outputs = net(images)
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
+            running_loss += loss.item()
+        
+        # Validation phase
+        val_loss, _ = test(net, valloader)
+        scheduler.step(val_loss)
+
+        print(f"Epoch {epoch+1}/{epochs}, Loss: {running_loss / len(trainloader)}, Val Loss: {val_loss}")
+
+        # Early stopping
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            early_stop_count = 0
+        else:
+            early_stop_count += 1
+            if early_stop_count >= early_stopping_patience:
+                print("Early stopping triggered.")
+                break
 
 
 def test(net, testloader):
@@ -226,7 +283,6 @@ def test(net, testloader):
     accuracy = correct / total
     return val_loss / len(testloader), accuracy
 
-
 def load_data(labels, malicious=False, noise=False):
     """
     Load and preprocess the MNIST dataset for the client.
@@ -238,42 +294,42 @@ def load_data(labels, malicious=False, noise=False):
     Returns:
         Tuple: Trainloader, validation loader, testloader
     """
-    transform = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize((0.1307,), (0.3081,))
-    ])
+    transform = transforms.Compose([transforms.ToTensor()])
 
-    mnist_train = datasets.MNIST('data', train=True, download=True, transform=transform)
-    mnist_test = datasets.MNIST('data', train=False, download=True, transform=transform)
+    # Load MNIST dataset
+    full_train = datasets.MNIST('data', train=True, download=True, transform=transform)
+    full_test = datasets.MNIST('data', train=False, download=True, transform=transform)
 
-    train_data = [(img, target) for img, target in mnist_train if target in labels]
-    test_data = [(img, target) for img, target in mnist_test if target in labels]
+    # Filter dataset based on provided labels
+    train_data = [(img, label) for img, label in full_train if label in labels]
+    test_data = [(img, label) for img, label in full_test if label in labels]
 
+    print(f"Filtered Training Images per Label: {dict(Counter([label for _, label in train_data]))}")
+    print(f"Filtered Test Images per Label: {dict(Counter([label for _, label in test_data]))}")
+
+    # Apply malicious client behavior
     if malicious:
-        # Generate fake labels by shuffling or assigning random labels
-        print(f"[CLIENT] Malicious mode enabled: altering labels.")
-        train_data = [(img, random.randint(0, 9)) for img, _ in train_data]
-        test_data = [(img, random.randint(0, 9)) for img, _ in test_data]
+        print("⚠️ Malicious client detected: Flipping labels randomly.")
+        train_data = [(img, random.choice(range(10))) for img, _ in train_data]  # Random labels
 
-    elif noise:
-        # Introduce random noise to labels (flipping some labels)
-        print(f"[CLIENT] Noise mode enabled: introducing label noise.")
-        noise_ratio = 0.2  # 20% labels will be flipped
-        noisy_train_data = []
-        for img, label in train_data:
-            if random.random() < noise_ratio:
-                new_label = random.choice([l for l in range(10) if l != label])
-                noisy_train_data.append((img, new_label))
-            else:
-                noisy_train_data.append((img, label))
-        train_data = noisy_train_data
-    trainloader = DataLoader(train_data, batch_size=32, shuffle=True)
-    valloader = DataLoader(train_data, batch_size=32)
-    testloader = DataLoader(test_data, batch_size=32)
+    # Apply noise to labels (10% chance of incorrect labels)
+    if noise:
+        print("⚠️ Noisy client detected: Adding label noise (10%).")
+        train_data = [(img, random.choice(range(10))) if random.random() < 0.5 else (img, label) for img, label in train_data]
 
-    return trainloader, valloader, testloader
+    # Split train into train & validation
+    val_size = int(len(train_data) * 0.2)
+    train_data, val_data = train_data[:-val_size], train_data[-val_size:]
 
+    print(f"Dataset Sizes - Train: {len(train_data)}, Validation: {len(val_data)}, Test: {len(test_data)}")
 
+    # Create dataloaders
+    train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
+    val_loader = DataLoader(val_data, batch_size=32, shuffle=False)
+    test_loader = DataLoader(test_data, batch_size=32, shuffle=False)
+
+    return train_loader, val_loader, test_loader    
+    
 def main():
     parser = argparse.ArgumentParser(description="Federated Learning Client")
     parser.add_argument("--labels", nargs='+', type=int, required=True, help="Label of data this client will handle")
