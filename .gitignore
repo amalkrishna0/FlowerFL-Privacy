@@ -16,6 +16,7 @@ model_updates(LEGIT CLIENTs)
 aa.py
 best_autoencoder.pth
 best_autoencoder_2.pth
+log.txt
 GAN.py
 model_abnormal
 model_updates_for_3_client_legit
