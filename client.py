@@ -2,7 +2,7 @@ import flwr as fl
 import torch
 from torch import optim
 from torchvision import datasets, transforms
-
+from sklearn.metrics import precision_score, recall_score
 from torch.utils.data import DataLoader,random_split
 import numpy as np
 import tenseal as ts
@@ -148,7 +148,7 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         """
         self.set_parameters(parameters)
         train(self.net, self.trainloader, self.valloader ,  epochs=10)
-        val_loss, accuracy = test(self.net, self.valloader)
+        val_loss, accuracy, precision, recall = test(self.net, self.valloader)
         print(f"Config received: {config}")  # Debugging
         if self.noise:
             latent_representation = self.extract_latent_representation(self.net, apply_noise=True, noise_factor=0.2)
@@ -157,8 +157,14 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         print("TYPE LATENT",type(latent_representation))
         np.save(f"latent_representations/client_{self.cid}.npy", latent_representation)
 
-        return self.get_parameters(config={}), len(self.trainloader.dataset), {"partition_id": self.cid,"cid": self.cid,"accuracy":float(accuracy),"loss":float(val_loss),"latent_representation": f"latent_representations/client_{self.cid}.npy"}
-
+        return self.get_parameters(config={}), len(self.trainloader.dataset), {
+            "partition_id": self.cid,
+            "cid": self.cid,
+            "accuracy": float(accuracy),
+            "loss": float(val_loss),
+            "precision": float(precision),
+            "recall": float(recall),
+            "latent_representation": f"latent_representations/client_{self.cid}.npy"}
 
     def extract_latent_representation(self, model, apply_noise=True, noise_factor=0.2):
         """
@@ -190,8 +196,14 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
             Tuple: Validation loss, number of samples used, and accuracy metrics
         """
         self.set_parameters(parameters)
-        val_loss, accuracy = test(self.net, self.valloader)
-        return float(val_loss), len(self.valloader.dataset), {"val_loss": float(val_loss), "accuracy": float(accuracy), "cid": self.cid}
+        val_loss, accuracy, precision, recall = test(self.net, self.valloader)
+        return float(val_loss), len(self.valloader.dataset), {
+            "val_loss": float(val_loss),
+            "accuracy": float(accuracy),
+            "precision": float(precision),
+            "recall": float(recall),
+            "cid": self.cid
+        }
     
     def save_model_update(self, params,path):
         """Save model parameters locally as a pickle file with a timestamp."""
@@ -241,7 +253,7 @@ def train(net, trainloader, valloader, epochs):
             running_loss += loss.item()
         
         # Validation phase
-        val_loss, _ = test(net, valloader)
+        val_loss, accuracy, precision, recall = test(net, valloader)
         scheduler.step(val_loss)
 
         print(f"Epoch {epoch+1}/{epochs}, Loss: {running_loss / len(trainloader)}, Val Loss: {val_loss}")
@@ -261,18 +273,17 @@ def test(net, testloader):
     """
     Evaluate the model on the given dataset.
     
-    Args:
-        net (torch.nn.Module): Neural network model
-        testloader (DataLoader): Test dataset loader
-    
     Returns:
-        Tuple: Validation loss and accuracy
+        Tuple: Validation loss, accuracy, precision, recall, f1
     """
     criterion = nn.CrossEntropyLoss()
     net.eval()
     val_loss = 0.0
     correct = 0
     total = 0
+    all_preds = []
+    all_labels = []
+
     with torch.no_grad():
         for images, labels in testloader:
             outputs = net(images)
@@ -280,8 +291,16 @@ def test(net, testloader):
             _, predicted = outputs.max(1)
             total += labels.size(0)
             correct += predicted.eq(labels).sum().item()
+
+            all_preds.extend(predicted.cpu().numpy())
+            all_labels.extend(labels.cpu().numpy())
+
     accuracy = correct / total
-    return val_loss / len(testloader), accuracy
+    precision = precision_score(all_labels, all_preds, average="macro", zero_division=0)
+    recall = recall_score(all_labels, all_preds, average="macro", zero_division=0)
+
+    return val_loss / len(testloader), accuracy, precision, recall
+
 
 def load_data(labels, malicious=False, noise=False):
     """

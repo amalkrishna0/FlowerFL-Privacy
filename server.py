@@ -8,7 +8,7 @@ from flwr.server.strategy import FedAvg
 import numpy as np
 from model import Autoencoder
 import torch
-
+import json
 
 import logging
 import sys
@@ -108,6 +108,32 @@ class HomomorphicFedAvg(FedAvg):
 
             print(f"[Round {server_round}] Client {cid} - Accuracy: {accuracy:.4f}, Loss: {loss:.4f}")
 
+
+            # Save client metrics to file
+            metrics_file = "plot/client_metrics.json"
+
+            # Load existing data or initialize
+            stored_metrics = []
+            if os.path.exists(metrics_file) and os.path.getsize(metrics_file) > 0:
+                with open(metrics_file, "r") as f:
+                    try:
+                        stored_metrics = json.load(f)
+                    except json.JSONDecodeError:
+                        print("⚠️ Warning: JSON decode failed. Starting with empty metrics list.")
+
+
+            # Append current round's metrics
+            stored_metrics.append({
+                "round": server_round,
+                "client_id": cid,
+                "accuracy": accuracy,
+                "loss": loss
+            })
+
+            # Save back to file
+            with open(metrics_file, "w") as f:
+                json.dump(stored_metrics, f, indent=4)
+
             if cid in self.flagged_clients:
                 print(f"Skipping flagged client {cid}")
                 continue
@@ -195,29 +221,79 @@ class HomomorphicFedAvg(FedAvg):
         if not results:
             return None, {}
 
-        total_loss, total_accuracy, total_samples = 0.0, 0.0, 0
+        total_loss, total_accuracy = 0.0, 0.0
+        total_precision, total_recall, total_f1 = 0.0, 0.0, 0.0
+        total_samples = 0
 
         for client_proxy, eval_res in results:
             cid = client_proxy.cid
-            client_accuracy = eval_res.metrics.get("accuracy", 0.0)
-            client_val_loss = eval_res.metrics.get("val_loss", 0.0)
-
-            # Skip evaluation results from flagged clients
             if cid in self.flagged_clients:
                 print(f"Skipping flagged client {cid} in evaluation")
                 continue
 
-            print(f"[Round {server_round}] Client {cid} - Evaluation Loss: {client_val_loss:.4f}, Evaluation Accuracy: {client_accuracy:.4f}")
-            total_loss += client_val_loss * eval_res.num_examples
-            total_accuracy += client_accuracy * eval_res.num_examples
-            total_samples += eval_res.num_examples
+            num_examples = eval_res.num_examples
+            metrics = eval_res.metrics
 
-        # Compute average loss and accuracy, avoiding division by zero
-        average_loss = total_loss / total_samples if total_samples > 0 else 0.0
-        average_accuracy = total_accuracy / total_samples if total_samples > 0 else 0.0
+            loss = metrics.get("val_loss", 0.0)
+            accuracy = metrics.get("accuracy", 0.0)
+            precision = metrics.get("precision", 0.0)
+            recall = metrics.get("recall", 0.0)
 
-        print(f"Round {server_round} - Average loss: {average_loss:.4f}, Average accuracy: {average_accuracy:.4f}")
-        return average_loss, {"accuracy": average_accuracy}
+            print(f"[Round {server_round}] Client {cid} - Loss: {loss:.4f}, Accuracy: {accuracy:.4f}, "
+                f"Precision: {precision:.4f}, Recall: {recall:.4f}")
+
+            total_loss += loss * num_examples
+            total_accuracy += accuracy * num_examples
+            total_precision += precision * num_examples
+            total_recall += recall * num_examples
+            total_samples += num_examples
+
+        # Compute average metrics
+        if total_samples == 0:
+            return 0.0, {}
+
+        avg_loss = total_loss / total_samples
+        avg_accuracy = total_accuracy / total_samples
+        avg_precision = total_precision / total_samples
+        avg_recall = total_recall / total_samples
+
+        print(f"\n[Round {server_round}] Aggregated Metrics → Loss: {avg_loss:.4f}, Accuracy: {avg_accuracy:.4f}, "
+            f"Precision: {avg_precision:.4f}, Recall: {avg_recall:.4f}\n")
+
+        # Return the aggregated loss and metrics dictionary
+        metrics_dict = {
+            "val_loss": avg_loss,
+            "accuracy": avg_accuracy,
+            "precision": avg_precision,
+            "recall": avg_recall
+        }
+
+        # 🔽 Optional: Save global metrics to a file
+        global_metrics_file = "plot/global_metrics.json"
+        stored_global_metrics = []
+
+        if os.path.exists(global_metrics_file) and os.path.getsize(global_metrics_file) > 0:
+            with open(global_metrics_file, "r") as f:
+                try:
+                    stored_global_metrics = json.load(f)
+                except json.JSONDecodeError:
+                    print("⚠️ Warning: Could not decode global_metrics.json")
+
+        stored_global_metrics.append({
+            "round": server_round,
+            **metrics_dict
+        })
+
+        with open(global_metrics_file, "w") as f:
+            json.dump(stored_global_metrics, f, indent=4)
+
+
+        return avg_loss, {
+            "accuracy": avg_accuracy,
+            "precision": avg_precision,
+            "recall": avg_recall,
+        }
+
 
 @hydra.main(config_path="conf", config_name="base", version_base=None)
 def main(cfg: DictConfig):
