@@ -70,6 +70,7 @@ class HomomorphicFedAvg(FedAvg):
         super().__init__(*args, **kwargs)
         self.client_accuracies = {}  # Dictionary to track client accuracies across rounds
         self.client_anomaly_counts = {}  # Track anomaly counts
+        self.flagged_clients = set()  # Set to store clients flagged as malicious
         self.min_anomaly_threshold =0.5 # Initial threshold
         self.max_anomaly_threshold =0.8 # Initial threshold
         self.max_reconstruction_error = 0.8  # Dynamic thresholding variable
@@ -106,6 +107,10 @@ class HomomorphicFedAvg(FedAvg):
             print(f"[Round {server_round}] Client {cid} - Accuracy: {accuracy:.4f}, Loss: {loss:.4f}")
 
 
+            if cid in self.flagged_clients:
+                print(f"Skipping flagged client {cid}")
+                continue
+
             # Load latent representation from file
             latent_path = fit_res.metrics.get("latent_representation", None)
             if latent_path and os.path.exists(latent_path):
@@ -139,6 +144,7 @@ class HomomorphicFedAvg(FedAvg):
                 if reconstruction_error > self.max_anomaly_threshold or reconstruction_error < self.min_anomaly_threshold:
                     self.client_anomaly_counts[cid] = self.client_anomaly_counts.get(cid, 0) + 1
                     if self.client_anomaly_counts[cid] >= 4:  # Flag client permanently
+                        self.flagged_clients.add(cid)
                         self.max_reconstruction_error = max(self.max_reconstruction_error, reconstruction_error)
                         self.anomaly_threshold = self.max_reconstruction_error  # Update threshold dynamically
                         print(f"🚨 Client {cid} flagged! New anomaly threshold: {self.anomaly_threshold:.6f}")
@@ -160,6 +166,7 @@ class HomomorphicFedAvg(FedAvg):
                     recent_accuracies = self.client_accuracies[cid][-3:]
                     avg_accuracy = sum(recent_accuracies) / len(recent_accuracies)
                     if avg_accuracy < 0.3:
+                        self.flagged_clients.add(cid)
                         print(f"Client {cid} flagged as malicious!")
 
         # Ensure at least one valid client remains for aggregation
@@ -204,6 +211,11 @@ class HomomorphicFedAvg(FedAvg):
             recall = metrics.get("recall", 0.0)
 
 
+            # Skip evaluation results from flagged clients
+            if cid in self.flagged_clients:
+                print(f"Skipping flagged client {cid} in evaluation")
+                continue
+            
             # Save evaluation metrics for each non-flagged client
             metrics_file = "plot/client_metrics_for_malicious_clients_without_anomaly_detection.json"
             stored_metrics = []
@@ -225,8 +237,7 @@ class HomomorphicFedAvg(FedAvg):
             with open(metrics_file, "w") as f:
                 json.dump(stored_metrics, f, indent=4)
 
-            print(f"[Round {server_round}] Client {cid} - Loss: {loss:.4f}, Accuracy: {accuracy:.4f}, "
-                f"Precision: {precision:.4f}, Recall: {recall:.4f}")
+            print(f"[Round {server_round}] Client {cid} - Loss: {loss:.4f}, Accuracy: {accuracy:.4f}")
 
             total_loss += loss * num_examples
             total_accuracy += accuracy * num_examples
@@ -243,8 +254,7 @@ class HomomorphicFedAvg(FedAvg):
         avg_precision = total_precision / total_samples
         avg_recall = total_recall / total_samples
 
-        print(f"\n[Round {server_round}] Aggregated Metrics → Loss: {avg_loss:.4f}, Accuracy: {avg_accuracy:.4f}, "
-            f"Precision: {avg_precision:.4f}, Recall: {avg_recall:.4f}\n")
+        print(f"\n[Round {server_round}] Aggregated Metrics → Loss: {avg_loss:.4f}, Accuracy: {avg_accuracy:.4f}")
 
         # Return the aggregated loss and metrics dictionary
         metrics_dict = {

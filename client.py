@@ -162,8 +162,6 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
             "cid": self.cid,
             "accuracy": float(accuracy),
             "loss": float(val_loss),
-            "precision": float(precision),
-            "recall": float(recall),
             "latent_representation": f"latent_representations/client_{self.cid}.npy"}
 
     def extract_latent_representation(self, model, apply_noise=True, noise_factor=0.2):
@@ -200,8 +198,6 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         return float(val_loss), len(self.valloader.dataset), {
             "val_loss": float(val_loss),
             "val_accuracy": float(accuracy),
-            "precision": float(precision),
-            "recall": float(recall),
             "cid": self.cid
         }
     
