@@ -199,7 +199,7 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
         val_loss, accuracy, precision, recall = test(self.net, self.valloader)
         return float(val_loss), len(self.valloader.dataset), {
             "val_loss": float(val_loss),
-            "accuracy": float(accuracy),
+            "val_accuracy": float(accuracy),
             "precision": float(precision),
             "recall": float(recall),
             "cid": self.cid
