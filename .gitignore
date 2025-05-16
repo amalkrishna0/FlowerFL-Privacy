@@ -24,3 +24,8 @@ model_updates_for_3_client_not_legit
 autoencoder_new.pth
 new_train.ipynb
 log_files
+plot
+rounds_vs_loss.png
+rounds_vs_accuracy.png
+client_vs_global_accuracy.png
+nothing.py
