@@ -31,7 +31,7 @@ class DualOutput:
 log_format = "%(asctime)s - %(levelname)s - %(message)s"
 
 # Create a file handler (writes logs to log.txt)
-file_handler = logging.FileHandler("log.txt", mode="w", encoding="utf-8")
+file_handler = logging.FileHandler("log_malicious_without_anomaly_detection.txt", mode="w", encoding="utf-8")
 file_handler.setFormatter(logging.Formatter(log_format))
 
 # Create a console handler (prints logs to terminal)
@@ -51,7 +51,7 @@ root_logger.addHandler(file_handler)
 root_logger.addHandler(console_handler)
 
 # Redirect stdout and stderr to DualOutput, so both print() and logging work
-sys.stdout = DualOutput("log.txt")
+sys.stdout = DualOutput("log_malicious_without_anomaly_detection.txt")
 sys.stderr = sys.stdout
 
 
@@ -71,7 +71,6 @@ class HomomorphicFedAvg(FedAvg):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.client_accuracies = {}  # Dictionary to track client accuracies across rounds
-        self.flagged_clients = set()  # Set to store clients flagged as malicious
         self.client_anomaly_counts = {}  # Track anomaly counts
         self.min_anomaly_threshold =0.5 # Initial threshold
         self.max_anomaly_threshold =0.8 # Initial threshold
@@ -109,35 +108,6 @@ class HomomorphicFedAvg(FedAvg):
             print(f"[Round {server_round}] Client {cid} - Accuracy: {accuracy:.4f}, Loss: {loss:.4f}")
 
 
-            # Save client metrics to file
-            metrics_file = "plot/client_metrics.json"
-
-            # Load existing data or initialize
-            stored_metrics = []
-            if os.path.exists(metrics_file) and os.path.getsize(metrics_file) > 0:
-                with open(metrics_file, "r") as f:
-                    try:
-                        stored_metrics = json.load(f)
-                    except json.JSONDecodeError:
-                        print("⚠️ Warning: JSON decode failed. Starting with empty metrics list.")
-
-
-            # Append current round's metrics
-            stored_metrics.append({
-                "round": server_round,
-                "client_id": cid,
-                "accuracy": accuracy,
-                "loss": loss
-            })
-
-            # Save back to file
-            with open(metrics_file, "w") as f:
-                json.dump(stored_metrics, f, indent=4)
-
-            if cid in self.flagged_clients:
-                print(f"Skipping flagged client {cid}")
-                continue
-
             # Load latent representation from file
             latent_path = fit_res.metrics.get("latent_representation", None)
             if latent_path and os.path.exists(latent_path):
@@ -167,11 +137,10 @@ class HomomorphicFedAvg(FedAvg):
             reconstruction_error = torch.mean((latent_tensor - latent_reconstructed) ** 2).item()
 
             print(f"Client {cid} Reconstruction Error: {reconstruction_error:.6f}")
-            if (server_round>=15):
+            if (server_round>=30):
                 if reconstruction_error > self.max_anomaly_threshold or reconstruction_error < self.min_anomaly_threshold:
                     self.client_anomaly_counts[cid] = self.client_anomaly_counts.get(cid, 0) + 1
                     if self.client_anomaly_counts[cid] >= 4:  # Flag client permanently
-                        self.flagged_clients.add(cid)
                         self.max_reconstruction_error = max(self.max_reconstruction_error, reconstruction_error)
                         self.anomaly_threshold = self.max_reconstruction_error  # Update threshold dynamically
                         print(f"🚨 Client {cid} flagged! New anomaly threshold: {self.anomaly_threshold:.6f}")
@@ -193,7 +162,6 @@ class HomomorphicFedAvg(FedAvg):
                     recent_accuracies = self.client_accuracies[cid][-3:]
                     avg_accuracy = sum(recent_accuracies) / len(recent_accuracies)
                     if avg_accuracy < 0.3:
-                        self.flagged_clients.add(cid)
                         print(f"Client {cid} flagged as malicious!")
 
         # Ensure at least one valid client remains for aggregation
@@ -227,17 +195,37 @@ class HomomorphicFedAvg(FedAvg):
 
         for client_proxy, eval_res in results:
             cid = client_proxy.cid
-            if cid in self.flagged_clients:
-                print(f"Skipping flagged client {cid} in evaluation")
-                continue
+           
 
             num_examples = eval_res.num_examples
             metrics = eval_res.metrics
 
             loss = metrics.get("val_loss", 0.0)
-            accuracy = metrics.get("accuracy", 0.0)
+            accuracy = metrics.get("val_accuracy", 0.0)
             precision = metrics.get("precision", 0.0)
             recall = metrics.get("recall", 0.0)
+
+
+            # Save evaluation metrics for each non-flagged client
+            metrics_file = "plot/client_metrics_for_malicious_clients_without_anomaly_detection.json"
+            stored_metrics = []
+
+            if os.path.exists(metrics_file) and os.path.getsize(metrics_file) > 0:
+                with open(metrics_file, "r") as f:
+                    try:
+                        stored_metrics = json.load(f)
+                    except json.JSONDecodeError:
+                        print("⚠️ Warning: Could not decode client_metrics.json")
+
+            stored_metrics.append({
+                "round": server_round,
+                "client_id": cid,
+                "accuracy": accuracy,
+                "loss": loss
+            })
+
+            with open(metrics_file, "w") as f:
+                json.dump(stored_metrics, f, indent=4)
 
             print(f"[Round {server_round}] Client {cid} - Loss: {loss:.4f}, Accuracy: {accuracy:.4f}, "
                 f"Precision: {precision:.4f}, Recall: {recall:.4f}")
@@ -269,7 +257,7 @@ class HomomorphicFedAvg(FedAvg):
         }
 
         # 🔽 Optional: Save global metrics to a file
-        global_metrics_file = "plot/global_metrics.json"
+        global_metrics_file = "plot/global_metrics_for_malicious_clients_without_anomaly_detection.json"
         stored_global_metrics = []
 
         if os.path.exists(global_metrics_file) and os.path.getsize(global_metrics_file) > 0:
