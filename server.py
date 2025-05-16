@@ -55,7 +55,6 @@ sys.stdout = DualOutput("log_malicious_without_anomaly_detection.txt")
 sys.stderr = sys.stdout
 
 
-
 # Load the public homomorphic encryption context from a file
 with open("public_context.pkl", "rb") as f:
     public_context = pickle.load(f)
