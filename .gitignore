@@ -3,7 +3,6 @@ extracted_parameters
 .env
 extracted_data.py
 data
-start_client.ps1
 secret_context.pkl
 public_context.pkl
 graphs
@@ -29,3 +28,4 @@ rounds_vs_loss.png
 rounds_vs_accuracy.png
 client_vs_global_accuracy.png
 nothing.py
+log_malicious_without_anomaly_detection.txt
