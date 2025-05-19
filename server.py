@@ -61,10 +61,19 @@ with open("public_context.pkl", "rb") as f:
 # Initialize the encryption context from the loaded data
 context = ts.context_from(public_context)
 
-autoencoder = Autoencoder(93322)
-autoencoder.load_state_dict(torch.load("autoencoder_new.pth", map_location=torch.device('cpu')))
-autoencoder.eval()
+# Check if the autoencoder file exists before loading
+autoencoder_path = "autoencoder_new.pth"
+autoencoder = None  # Initialize to None to avoid usage errors if not loaded
 
+if os.path.exists(autoencoder_path):
+    autoencoder = Autoencoder(93322)
+    autoencoder.load_state_dict(torch.load(autoencoder_path, map_location=torch.device('cpu')))
+    autoencoder.eval()
+    print("Autoencoder loaded successfully.")
+else:
+    print(f"Autoencoder file '{autoencoder_path}' not found. Skipping autoencoder setup.")
+
+    
 class HomomorphicFedAvg(FedAvg):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
