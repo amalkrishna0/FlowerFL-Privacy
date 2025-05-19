@@ -1,0 +1,1494 @@
+Autoencoder loaded successfully.
+[2025-05-19 09:59:42,840][flwr][INFO] - Starting Flower server, config: num_rounds=60, no round_timeout
+[2025-05-19 09:59:43,927][flwr][INFO] - Flower ECE: gRPC server running (60 rounds), SSL is disabled
+[2025-05-19 09:59:43,930][flwr][INFO] - [INIT]
+[2025-05-19 09:59:43,932][flwr][INFO] - Requesting initial parameters from one random client
+[2025-05-19 09:59:56,919][flwr][INFO] - Received initial parameters from one random client
+[2025-05-19 09:59:56,919][flwr][INFO] - Starting evaluation of initial global parameters
+[2025-05-19 09:59:56,920][flwr][INFO] - Evaluation returned no results (`None`)
+[2025-05-19 09:59:56,921][flwr][INFO] - 
+[2025-05-19 09:59:56,921][flwr][INFO] - [ROUND 1]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 09:59:56,922][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:03:38,158][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 1] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9944, Loss: 0.0240
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 1] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.5414, Loss: 1.7287
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 1] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9972, Loss: 0.0066
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.611526
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.304760
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.626276
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:03:38,535][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:03:40,761][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 1] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 2.1687, Accuracy: 0.4316
+[Round 1] Client 30713de3c6174936a57e34d84493128b - Loss: 2.2121, Accuracy: 0.3430
+[Round 1] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 2.0741, Accuracy: 0.5438
+
+[Round 1] Aggregated Metrics → Loss: 2.1502, Accuracy: 0.4415
+[2025-05-19 10:03:41,049][flwr][INFO] - 
+[2025-05-19 10:03:41,050][flwr][INFO] - [ROUND 2]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:03:41,051][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:06:57,334][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 2] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.5341, Loss: 1.7889
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 2] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9969, Loss: 0.0132
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 2] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0053
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.677817
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.644973
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.653019
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:06:57,702][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:06:59,791][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 2] Client 30713de3c6174936a57e34d84493128b - Loss: 2.0755, Accuracy: 0.3269
+[Round 2] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.8712, Accuracy: 0.9366
+[Round 2] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 1.3253, Accuracy: 0.6493
+
+[Round 2] Aggregated Metrics → Loss: 1.4120, Accuracy: 0.6437
+[2025-05-19 10:06:59,930][flwr][INFO] - 
+[2025-05-19 10:06:59,931][flwr][INFO] - [ROUND 3]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:06:59,931][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:09:54,991][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 3] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.5114, Loss: 1.9157
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 3] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9969, Loss: 0.0124
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 3] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9992, Loss: 0.0038
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.033099
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.653534
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.653707
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:09:55,363][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:09:57,420][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 3] Client 30713de3c6174936a57e34d84493128b - Loss: 2.9622, Accuracy: 0.3222
+[Round 3] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.3029, Accuracy: 0.9477
+[Round 3] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.5480, Accuracy: 0.8686
+
+[Round 3] Aggregated Metrics → Loss: 1.2449, Accuracy: 0.7190
+[2025-05-19 10:09:57,564][flwr][INFO] - 
+[2025-05-19 10:09:57,564][flwr][INFO] - [ROUND 4]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:09:57,565][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:12:46,536][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 4] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9990, Loss: 0.0040
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 4] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9954, Loss: 0.0173
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 4] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4723, Loss: 2.0356
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.653533
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.658074
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.001835
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:12:46,891][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:12:48,900][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 4] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.4265, Accuracy: 0.8713
+[Round 4] Client 30713de3c6174936a57e34d84493128b - Loss: 3.5091, Accuracy: 0.3102
+[Round 4] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1168, Accuracy: 0.9835
+
+[Round 4] Aggregated Metrics → Loss: 1.3208, Accuracy: 0.7271
+[2025-05-19 10:12:49,048][flwr][INFO] - 
+[2025-05-19 10:12:49,048][flwr][INFO] - [ROUND 5]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:12:49,049][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:15:46,761][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 5] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9992, Loss: 0.0036
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 5] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9971, Loss: 0.0122
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 5] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4505, Loss: 2.2912
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.658375
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.658707
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.125851
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:15:47,147][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:15:49,186][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 5] Client 30713de3c6174936a57e34d84493128b - Loss: 4.2769, Accuracy: 0.3089
+[Round 5] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2232, Accuracy: 0.9352
+[Round 5] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1236, Accuracy: 0.9660
+
+[Round 5] Aggregated Metrics → Loss: 1.5017, Accuracy: 0.7428
+[2025-05-19 10:15:49,329][flwr][INFO] - 
+[2025-05-19 10:15:49,330][flwr][INFO] - [ROUND 6]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:15:49,331][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:18:44,404][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 6] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9969, Loss: 0.0138
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 6] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4256, Loss: 2.5895
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 6] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9998, Loss: 0.0011
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.658361
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.375883
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.660556
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:18:44,808][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:18:47,037][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 6] Client 30713de3c6174936a57e34d84493128b - Loss: 4.8064, Accuracy: 0.3250
+[Round 6] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2123, Accuracy: 0.9295
+[Round 6] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0561, Accuracy: 0.9824
+
+[Round 6] Aggregated Metrics → Loss: 1.6451, Accuracy: 0.7521
+[2025-05-19 10:18:47,179][flwr][INFO] - 
+[2025-05-19 10:18:47,179][flwr][INFO] - [ROUND 7]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:18:47,180][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:21:30,637][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 7] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9975, Loss: 0.0126
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 7] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9984, Loss: 0.0048
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 7] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4024, Loss: 3.0470
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.660164
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.661299
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.086170
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:21:31,021][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:21:33,178][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 7] Client 30713de3c6174936a57e34d84493128b - Loss: 4.9440, Accuracy: 0.3112
+[Round 7] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2452, Accuracy: 0.9164
+[Round 7] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0884, Accuracy: 0.9737
+
+[Round 7] Aggregated Metrics → Loss: 1.7117, Accuracy: 0.7403
+[2025-05-19 10:21:33,323][flwr][INFO] - 
+[2025-05-19 10:21:33,323][flwr][INFO] - [ROUND 8]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:21:33,324][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:24:31,869][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 8] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9986, Loss: 0.0050
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 8] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9973, Loss: 0.0146
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 8] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3653, Loss: 3.2551
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.661330
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.660506
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.009431
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:24:32,215][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:24:34,219][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 8] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1574, Accuracy: 0.9462
+[Round 8] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1788, Accuracy: 0.9451
+[Round 8] Client 30713de3c6174936a57e34d84493128b - Loss: 5.6953, Accuracy: 0.3097
+
+[Round 8] Aggregated Metrics → Loss: 1.9567, Accuracy: 0.7399
+[2025-05-19 10:24:34,362][flwr][INFO] - 
+[2025-05-19 10:24:34,363][flwr][INFO] - [ROUND 9]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:24:34,363][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:27:16,660][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 9] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3777, Loss: 3.8861
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 9] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9990, Loss: 0.0046
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 9] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9975, Loss: 0.0105
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.013117
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.662279
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.662093
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:27:17,026][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:27:19,178][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 9] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1293, Accuracy: 0.9614
+[Round 9] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1992, Accuracy: 0.9408
+[Round 9] Client 30713de3c6174936a57e34d84493128b - Loss: 5.3582, Accuracy: 0.3179
+
+[Round 9] Aggregated Metrics → Loss: 1.8453, Accuracy: 0.7461
+[2025-05-19 10:27:19,320][flwr][INFO] - 
+[2025-05-19 10:27:19,321][flwr][INFO] - [ROUND 10]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:27:19,322][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:30:08,245][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 10] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9992, Loss: 0.0023
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 10] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3799, Loss: 4.2827
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 10] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9965, Loss: 0.0195
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.662359
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.001218
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.662122
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:30:08,627][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:30:11,039][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 10] Client 30713de3c6174936a57e34d84493128b - Loss: 6.6409, Accuracy: 0.3142
+[Round 10] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1174, Accuracy: 0.9675
+[Round 10] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2288, Accuracy: 0.9316
+
+[Round 10] Aggregated Metrics → Loss: 2.2653, Accuracy: 0.7442
+[2025-05-19 10:30:11,215][flwr][INFO] - 
+[2025-05-19 10:30:11,215][flwr][INFO] - [ROUND 11]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:30:11,216][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:33:11,123][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 11] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9990, Loss: 0.0027
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 11] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9958, Loss: 0.0194
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 11] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3498, Loss: 4.6027
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.662508
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.662459
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.034270
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:33:11,513][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:33:13,634][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 11] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.3064, Accuracy: 0.9070
+[Round 11] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1230, Accuracy: 0.9610
+[Round 11] Client 30713de3c6174936a57e34d84493128b - Loss: 7.0015, Accuracy: 0.3134
+
+[Round 11] Aggregated Metrics → Loss: 2.4097, Accuracy: 0.7335
+[2025-05-19 10:33:13,780][flwr][INFO] - 
+[2025-05-19 10:33:13,780][flwr][INFO] - [ROUND 12]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:33:13,781][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:35:51,427][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 12] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9948, Loss: 0.0385
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 12] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9986, Loss: 0.0069
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 12] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3672, Loss: 5.2710
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.662870
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.662720
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.043647
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:35:51,802][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:35:53,927][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 12] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2154, Accuracy: 0.9448
+[Round 12] Client 30713de3c6174936a57e34d84493128b - Loss: 7.7818, Accuracy: 0.3142
+[Round 12] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2136, Accuracy: 0.9402
+
+[Round 12] Aggregated Metrics → Loss: 2.6631, Accuracy: 0.7392
+[2025-05-19 10:35:54,075][flwr][INFO] - 
+[2025-05-19 10:35:54,075][flwr][INFO] - [ROUND 13]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:35:54,076][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:38:30,903][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 13] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9967, Loss: 0.0339
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 13] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3591, Loss: 5.6135
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 13] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9988, Loss: 0.0029
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.662909
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.649768
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.663134
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:38:31,277][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:38:33,342][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 13] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.3168, Accuracy: 0.9154
+[Round 13] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1632, Accuracy: 0.9535
+[Round 13] Client 30713de3c6174936a57e34d84493128b - Loss: 7.3894, Accuracy: 0.3175
+
+[Round 13] Aggregated Metrics → Loss: 2.5541, Accuracy: 0.7346
+[2025-05-19 10:38:33,491][flwr][INFO] - 
+[2025-05-19 10:38:33,492][flwr][INFO] - [ROUND 14]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:38:33,493][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:41:27,373][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 14] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3640, Loss: 5.9535
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 14] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9971, Loss: 0.0150
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 14] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9986, Loss: 0.0053
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.365027
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.663558
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.663185
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:41:27,723][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:41:29,771][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 14] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1918, Accuracy: 0.9516
+[Round 14] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2408, Accuracy: 0.9414
+[Round 14] Client 30713de3c6174936a57e34d84493128b - Loss: 8.7417, Accuracy: 0.3177
+
+[Round 14] Aggregated Metrics → Loss: 2.9751, Accuracy: 0.7430
+[2025-05-19 10:41:29,926][flwr][INFO] - 
+[2025-05-19 10:41:29,927][flwr][INFO] - [ROUND 15]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:41:29,927][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:44:22,637][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 15] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9965, Loss: 0.0208
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 15] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3544, Loss: 6.1764
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 15] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9982, Loss: 0.0059
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.663373
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.009129
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.663434
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:44:22,988][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:44:24,942][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 15] Client 30713de3c6174936a57e34d84493128b - Loss: 8.8137, Accuracy: 0.3138
+[Round 15] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1799, Accuracy: 0.9558
+[Round 15] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2442, Accuracy: 0.9456
+
+[Round 15] Aggregated Metrics → Loss: 2.9950, Accuracy: 0.7447
+[2025-05-19 10:44:25,090][flwr][INFO] - 
+[2025-05-19 10:44:25,090][flwr][INFO] - [ROUND 16]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:44:25,092][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:47:11,805][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 16] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9965, Loss: 0.0307
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 16] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3614, Loss: 6.5483
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 16] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9976, Loss: 0.0056
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.663495
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.116768
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.663622
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:47:12,166][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:47:14,174][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 16] Client 30713de3c6174936a57e34d84493128b - Loss: 9.1564, Accuracy: 0.3200
+[Round 16] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2894, Accuracy: 0.9293
+[Round 16] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1960, Accuracy: 0.9556
+
+[Round 16] Aggregated Metrics → Loss: 3.1264, Accuracy: 0.7412
+[2025-05-19 10:47:14,331][flwr][INFO] - 
+[2025-05-19 10:47:14,331][flwr][INFO] - [ROUND 17]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:47:14,332][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:49:44,604][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 17] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3576, Loss: 6.7360
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 17] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9988, Loss: 0.0057
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 17] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9950, Loss: 0.0387
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.559981
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.663816
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.663724
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:49:44,965][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:49:46,976][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 17] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.3268, Accuracy: 0.9269
+[Round 17] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2415, Accuracy: 0.9406
+[Round 17] Client 30713de3c6174936a57e34d84493128b - Loss: 8.8888, Accuracy: 0.3145
+
+[Round 17] Aggregated Metrics → Loss: 3.0688, Accuracy: 0.7333
+[2025-05-19 10:49:47,132][flwr][INFO] - 
+[2025-05-19 10:49:47,133][flwr][INFO] - [ROUND 18]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:49:47,133][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:52:44,307][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 18] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9942, Loss: 0.0477
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 18] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9984, Loss: 0.0049
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 18] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3550, Loss: 7.0908
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.663795
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.663891
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.061854
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:52:44,681][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:52:46,878][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 18] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1917, Accuracy: 0.9562
+[Round 18] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.4393, Accuracy: 0.9051
+[Round 18] Client 30713de3c6174936a57e34d84493128b - Loss: 9.4438, Accuracy: 0.3175
+
+[Round 18] Aggregated Metrics → Loss: 3.2678, Accuracy: 0.7325
+[2025-05-19 10:52:47,028][flwr][INFO] - 
+[2025-05-19 10:52:47,029][flwr][INFO] - [ROUND 19]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:52:47,029][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:55:07,711][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 19] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9960, Loss: 0.0280
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 19] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0075
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 19] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3554, Loss: 7.2279
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664047
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.663984
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.302845
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:55:08,060][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:55:10,209][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 19] Client 30713de3c6174936a57e34d84493128b - Loss: 9.1468, Accuracy: 0.3132
+[Round 19] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.4912, Accuracy: 0.8897
+[Round 19] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2082, Accuracy: 0.9470
+
+[Round 19] Aggregated Metrics → Loss: 3.1977, Accuracy: 0.7222
+[2025-05-19 10:55:10,361][flwr][INFO] - 
+[2025-05-19 10:55:10,362][flwr][INFO] - [ROUND 20]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:55:10,363][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:58:05,513][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 20] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3610, Loss: 7.3051
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 20] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9956, Loss: 0.0362
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 20] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9986, Loss: 0.0052
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.334415
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664060
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664133
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:58:05,853][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 10:58:07,872][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 20] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2957, Accuracy: 0.9364
+[Round 20] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2832, Accuracy: 0.9320
+[Round 20] Client 30713de3c6174936a57e34d84493128b - Loss: 9.1152, Accuracy: 0.3117
+
+[Round 20] Aggregated Metrics → Loss: 3.1453, Accuracy: 0.7328
+[2025-05-19 10:58:08,023][flwr][INFO] - 
+[2025-05-19 10:58:08,024][flwr][INFO] - [ROUND 21]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 10:58:08,024][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:00:36,907][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 21] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0123
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 21] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3571, Loss: 7.5620
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 21] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9952, Loss: 0.0316
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664266
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.004830
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664167
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:00:37,270][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:00:39,295][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 21] Client 30713de3c6174936a57e34d84493128b - Loss: 9.5333, Accuracy: 0.3157
+[Round 21] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2969, Accuracy: 0.9366
+[Round 21] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.3408, Accuracy: 0.9266
+
+[Round 21] Aggregated Metrics → Loss: 3.3002, Accuracy: 0.7324
+[2025-05-19 11:00:39,480][flwr][INFO] - 
+[2025-05-19 11:00:39,480][flwr][INFO] - [ROUND 22]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:00:39,482][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:03:10,272][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 22] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9972, Loss: 0.0111
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 22] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3554, Loss: 7.6417
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 22] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9954, Loss: 0.0409
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664261
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.149949
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664452
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:03:10,651][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:03:12,732][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 22] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.4301, Accuracy: 0.9006
+[Round 22] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2202, Accuracy: 0.9479
+[Round 22] Client 30713de3c6174936a57e34d84493128b - Loss: 9.6878, Accuracy: 0.3016
+
+[Round 22] Aggregated Metrics → Loss: 3.3557, Accuracy: 0.7225
+[2025-05-19 11:03:12,900][flwr][INFO] - 
+[2025-05-19 11:03:12,900][flwr][INFO] - [ROUND 23]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:03:12,901][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:06:27,403][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 23] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9962, Loss: 0.0300
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 23] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3644, Loss: 7.6338
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 23] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9984, Loss: 0.0080
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664325
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.070642
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664366
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:06:27,807][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:06:30,203][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 23] Client 30713de3c6174936a57e34d84493128b - Loss: 9.6533, Accuracy: 0.3127
+[Round 23] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.3760, Accuracy: 0.9191
+[Round 23] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.3187, Accuracy: 0.9331
+
+[Round 23] Aggregated Metrics → Loss: 3.3582, Accuracy: 0.7277
+[2025-05-19 11:06:30,377][flwr][INFO] - 
+[2025-05-19 11:06:30,377][flwr][INFO] - [ROUND 24]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:06:30,378][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:09:05,853][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 24] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9952, Loss: 0.0354
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 24] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3649, Loss: 7.8883
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 24] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9984, Loss: 0.0091
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664441
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.155843
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664476
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:09:06,218][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:09:08,214][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 24] Client 30713de3c6174936a57e34d84493128b - Loss: 10.0675, Accuracy: 0.3100
+[Round 24] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.4177, Accuracy: 0.9131
+[Round 24] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2927, Accuracy: 0.9434
+
+[Round 24] Aggregated Metrics → Loss: 3.4971, Accuracy: 0.7283
+[2025-05-19 11:09:08,390][flwr][INFO] - 
+[2025-05-19 11:09:08,390][flwr][INFO] - [ROUND 25]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:09:08,391][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:11:43,989][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 25] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3578, Loss: 8.1639
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 25] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9935, Loss: 0.0756
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 25] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9986, Loss: 0.0052
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.049650
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664600
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664548
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:11:44,344][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:11:46,367][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 25] Client 30713de3c6174936a57e34d84493128b - Loss: 9.5600, Accuracy: 0.3166
+[Round 25] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.3112, Accuracy: 0.9341
+[Round 25] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.3192, Accuracy: 0.9304
+
+[Round 25] Aggregated Metrics → Loss: 3.3065, Accuracy: 0.7331
+[2025-05-19 11:11:46,537][flwr][INFO] - 
+[2025-05-19 11:11:46,538][flwr][INFO] - [ROUND 26]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:11:46,538][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:14:19,044][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 26] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3539, Loss: 8.0918
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 26] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9972, Loss: 0.0152
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 26] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9948, Loss: 0.0341
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.224974
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664726
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664570
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:14:19,410][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:14:21,427][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 26] Client 30713de3c6174936a57e34d84493128b - Loss: 10.6803, Accuracy: 0.3185
+[Round 26] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1267, Accuracy: 0.9727
+[Round 26] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.6377, Accuracy: 0.8801
+
+[Round 26] Aggregated Metrics → Loss: 3.7116, Accuracy: 0.7302
+[2025-05-19 11:14:21,592][flwr][INFO] - 
+[2025-05-19 11:14:21,593][flwr][INFO] - [ROUND 27]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:14:21,593][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:16:54,272][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 27] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3578, Loss: 8.2853
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 27] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9986, Loss: 0.0061
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 27] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9956, Loss: 0.0305
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.444645
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664703
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664676
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:16:54,629][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:16:56,553][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 27] Client 30713de3c6174936a57e34d84493128b - Loss: 9.7731, Accuracy: 0.3222
+[Round 27] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2085, Accuracy: 0.9554
+[Round 27] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.5219, Accuracy: 0.8937
+
+[Round 27] Aggregated Metrics → Loss: 3.4076, Accuracy: 0.7299
+[2025-05-19 11:16:56,713][flwr][INFO] - 
+[2025-05-19 11:16:56,713][flwr][INFO] - [ROUND 28]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:16:56,713][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:19:33,114][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 28] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9950, Loss: 0.0361
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 28] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3597, Loss: 8.2701
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 28] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9978, Loss: 0.0110
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664654
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.486602
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664715
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:19:33,455][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:19:35,488][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 28] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.5354, Accuracy: 0.8964
+[Round 28] Client 30713de3c6174936a57e34d84493128b - Loss: 9.7962, Accuracy: 0.3282
+[Round 28] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2236, Accuracy: 0.9535
+
+[Round 28] Aggregated Metrics → Loss: 3.4248, Accuracy: 0.7322
+[2025-05-19 11:19:35,642][flwr][INFO] - 
+[2025-05-19 11:19:35,643][flwr][INFO] - [ROUND 29]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:19:35,644][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:22:32,926][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 29] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9946, Loss: 0.0410
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 29] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9974, Loss: 0.0132
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 29] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3631, Loss: 8.1955
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664713
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664717
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.378783
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:22:33,326][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:22:35,284][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 29] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.4127, Accuracy: 0.9197
+[Round 29] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2835, Accuracy: 0.9438
+[Round 29] Client 30713de3c6174936a57e34d84493128b - Loss: 10.2773, Accuracy: 0.3196
+
+[Round 29] Aggregated Metrics → Loss: 3.5602, Accuracy: 0.7338
+[2025-05-19 11:22:35,446][flwr][INFO] - 
+[2025-05-19 11:22:35,447][flwr][INFO] - [ROUND 30]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:22:35,447][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:25:20,448][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 30] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9970, Loss: 0.0218
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 30] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9956, Loss: 0.0363
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 30] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3477, Loss: 8.1156
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664741
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664710
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.181509
+⚠️Client 30713de3c6174936a57e34d84493128b reconstruction error greater than threshold : (1/4)
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:25:20,826][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:25:22,965][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 30] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.4649, Accuracy: 0.9095
+[Round 30] Client 30713de3c6174936a57e34d84493128b - Loss: 10.5077, Accuracy: 0.3211
+[Round 30] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2747, Accuracy: 0.9469
+
+[Round 30] Aggregated Metrics → Loss: 3.6491, Accuracy: 0.7320
+[2025-05-19 11:25:23,333][flwr][INFO] - 
+[2025-05-19 11:25:23,333][flwr][INFO] - [ROUND 31]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:25:23,334][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:27:51,978][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 31] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0118
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 31] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3629, Loss: 8.1433
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 31] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9948, Loss: 0.0343
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664791
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.605425
+✅ Client 30713de3c6174936a57e34d84493128b passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664743
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:27:52,339][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:27:54,360][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 31] Client 30713de3c6174936a57e34d84493128b - Loss: 9.5133, Accuracy: 0.3170
+[Round 31] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.2374, Accuracy: 0.9505
+[Round 31] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.5278, Accuracy: 0.8953
+
+[Round 31] Aggregated Metrics → Loss: 3.3355, Accuracy: 0.7272
+[2025-05-19 11:27:54,526][flwr][INFO] - 
+[2025-05-19 11:27:54,527][flwr][INFO] - [ROUND 32]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:27:54,527][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:30:35,288][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 32] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9952, Loss: 0.0320
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 32] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3616, Loss: 8.3186
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 32] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9988, Loss: 0.0105
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664790
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.003740
+⚠️Client 30713de3c6174936a57e34d84493128b reconstruction error greater than threshold : (2/4)
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664837
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:30:35,650][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:30:37,722][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 32] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1640, Accuracy: 0.9667
+[Round 32] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.6172, Accuracy: 0.8887
+[Round 32] Client 30713de3c6174936a57e34d84493128b - Loss: 10.3375, Accuracy: 0.3102
+
+[Round 32] Aggregated Metrics → Loss: 3.6067, Accuracy: 0.7283
+[2025-05-19 11:30:37,892][flwr][INFO] - 
+[2025-05-19 11:30:37,892][flwr][INFO] - [ROUND 33]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:30:37,893][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:33:06,809][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 33] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3571, Loss: 8.4079
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+[Round 33] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9970, Loss: 0.0152
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 33] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9952, Loss: 0.0431
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.404299
+⚠️Client 30713de3c6174936a57e34d84493128b reconstruction error greater than threshold : (3/4)
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664861
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664821
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:33:07,154][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:33:09,115][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 33] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.5643, Accuracy: 0.9012
+[Round 33] Client 30713de3c6174936a57e34d84493128b - Loss: 11.2337, Accuracy: 0.3074
+[Round 33] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1851, Accuracy: 0.9636
+
+[Round 33] Aggregated Metrics → Loss: 3.8863, Accuracy: 0.7305
+[2025-05-19 11:33:09,289][flwr][INFO] - 
+[2025-05-19 11:33:09,289][flwr][INFO] - [ROUND 34]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c', '30713de3c6174936a57e34d84493128b']
+[2025-05-19 11:33:09,291][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:35:25,116][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 34] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9976, Loss: 0.0121
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 34] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9954, Loss: 0.0284
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 34] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3640, Loss: 8.4182
+Loaded latent representation from latent_representations/client_[3, 4, 5, 6].npy for Client 30713de3c6174936a57e34d84493128b
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664936
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664849
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 30713de3c6174936a57e34d84493128b Reconstruction Error: 0.111883
+🚨 Client 30713de3c6174936a57e34d84493128b flagged! New anomaly threshold: 0.800000
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:35:25,501][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:35:27,476][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 34] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.7925, Accuracy: 0.8634
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 34] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1486, Accuracy: 0.9677
+
+[Round 34] Aggregated Metrics → Loss: 0.4654, Accuracy: 0.9164
+[2025-05-19 11:35:27,603][flwr][INFO] - 
+[2025-05-19 11:35:27,604][flwr][INFO] - [ROUND 35]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:35:27,605][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:38:23,127][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 35] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9978, Loss: 0.0087
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 35] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3492, Loss: 8.3578
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 35] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9952, Loss: 0.0305
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664923
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664989
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:38:23,450][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:38:25,412][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 35] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1596, Accuracy: 0.9658
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 35] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.3699, Accuracy: 0.9309
+
+[Round 35] Aggregated Metrics → Loss: 0.2664, Accuracy: 0.9481
+[2025-05-19 11:38:25,538][flwr][INFO] - 
+[2025-05-19 11:38:25,538][flwr][INFO] - [ROUND 36]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:38:25,539][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:40:33,767][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 36] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3612, Loss: 8.7957
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 36] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9969, Loss: 0.0221
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 36] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0223
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665007
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.664965
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:40:34,015][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:40:36,146][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 36] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1865, Accuracy: 0.9664
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 36] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1743, Accuracy: 0.9705
+
+[Round 36] Aggregated Metrics → Loss: 0.1803, Accuracy: 0.9685
+[2025-05-19 11:40:36,266][flwr][INFO] - 
+[2025-05-19 11:40:36,267][flwr][INFO] - [ROUND 37]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:40:36,267][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:43:10,121][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 37] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3627, Loss: 8.6407
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 37] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9968, Loss: 0.0182
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 37] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9960, Loss: 0.0327
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665044
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664994
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:43:10,383][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:43:12,513][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 37] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2609, Accuracy: 0.9631
+[Round 37] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1168, Accuracy: 0.9776
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+
+[Round 37] Aggregated Metrics → Loss: 0.1877, Accuracy: 0.9704
+[2025-05-19 11:43:12,634][flwr][INFO] - 
+[2025-05-19 11:43:12,634][flwr][INFO] - [ROUND 38]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:43:12,635][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:45:44,467][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 38] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9984, Loss: 0.0111
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 38] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9969, Loss: 0.0304
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 38] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3601, Loss: 8.3578
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665043
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.664971
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:45:44,766][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:45:46,982][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 38] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1030, Accuracy: 0.9834
+[Round 38] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2682, Accuracy: 0.9639
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+
+[Round 38] Aggregated Metrics → Loss: 0.1843, Accuracy: 0.9738
+[2025-05-19 11:45:47,131][flwr][INFO] - 
+[2025-05-19 11:45:47,133][flwr][INFO] - [ROUND 39]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:45:47,133][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:48:34,421][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 39] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0233
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 39] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9960, Loss: 0.0328
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 39] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3619, Loss: 8.0545
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665085
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665065
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:48:34,724][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:48:37,002][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 39] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0777, Accuracy: 0.9867
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 39] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.3997, Accuracy: 0.9445
+
+[Round 39] Aggregated Metrics → Loss: 0.2362, Accuracy: 0.9659
+[2025-05-19 11:48:37,108][flwr][INFO] - 
+[2025-05-19 11:48:37,108][flwr][INFO] - [ROUND 40]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:48:37,109][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:51:36,365][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 40] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3576, Loss: 7.3919
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 40] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9952, Loss: 0.0476
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 40] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9976, Loss: 0.0207
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665067
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665092
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:51:36,622][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:51:38,882][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 40] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0958, Accuracy: 0.9859
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 40] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1944, Accuracy: 0.9748
+
+[Round 40] Aggregated Metrics → Loss: 0.1443, Accuracy: 0.9804
+[2025-05-19 11:51:39,014][flwr][INFO] - 
+[2025-05-19 11:51:39,015][flwr][INFO] - [ROUND 41]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:51:39,015][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:53:41,786][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 41] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3567, Loss: 6.3536
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 41] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9952, Loss: 0.0390
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 41] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0252
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665086
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665095
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:53:42,034][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:53:43,956][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 41] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0679, Accuracy: 0.9873
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 41] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.3162, Accuracy: 0.9604
+
+[Round 41] Aggregated Metrics → Loss: 0.1901, Accuracy: 0.9740
+[2025-05-19 11:53:44,075][flwr][INFO] - 
+[2025-05-19 11:53:44,075][flwr][INFO] - [ROUND 42]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:53:44,076][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:57:07,839][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 42] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9982, Loss: 0.0132
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 42] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3604, Loss: 6.3945
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 42] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9960, Loss: 0.0288
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665092
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665093
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:57:08,119][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 11:57:10,625][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 42] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0622, Accuracy: 0.9913
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 42] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2477, Accuracy: 0.9668
+
+[Round 42] Aggregated Metrics → Loss: 0.1535, Accuracy: 0.9793
+[2025-05-19 11:57:10,755][flwr][INFO] - 
+[2025-05-19 11:57:10,755][flwr][INFO] - [ROUND 43]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 11:57:10,755][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:01:32,097][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 43] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3610, Loss: 5.5142
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 43] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0233
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 43] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9965, Loss: 0.0206
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665047
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665101
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:01:32,392][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:01:34,657][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 43] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1518, Accuracy: 0.9798
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 43] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0927, Accuracy: 0.9863
+
+[Round 43] Aggregated Metrics → Loss: 0.1217, Accuracy: 0.9831
+[2025-05-19 12:01:34,781][flwr][INFO] - 
+[2025-05-19 12:01:34,782][flwr][INFO] - [ROUND 44]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:01:34,782][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:04:18,028][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 44] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9976, Loss: 0.0205
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 44] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3612, Loss: 5.1925
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 44] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9967, Loss: 0.0262
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665093
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665079
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:04:18,310][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:04:20,673][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 44] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1387, Accuracy: 0.9829
+[Round 44] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1173, Accuracy: 0.9822
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+
+[Round 44] Aggregated Metrics → Loss: 0.1278, Accuracy: 0.9826
+[2025-05-19 12:04:20,796][flwr][INFO] - 
+[2025-05-19 12:04:20,796][flwr][INFO] - [ROUND 45]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:04:20,796][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:07:26,172][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 45] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.3964, Loss: 3.4212
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 45] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9982, Loss: 0.0146
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 45] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9967, Loss: 0.0349
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665095
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665074
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:07:26,457][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:07:28,561][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 45] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0533, Accuracy: 0.9911
+[Round 45] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.4416, Accuracy: 0.9564
+
+[Round 45] Aggregated Metrics → Loss: 0.2444, Accuracy: 0.9740
+[2025-05-19 12:07:28,689][flwr][INFO] - 
+[2025-05-19 12:07:28,690][flwr][INFO] - [ROUND 46]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:07:28,691][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:10:46,163][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 46] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4391, Loss: 2.9944
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 46] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9982, Loss: 0.0268
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 46] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9965, Loss: 0.0314
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665092
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665074
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:10:46,461][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:10:48,624][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 46] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0463, Accuracy: 0.9935
+[Round 46] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.4992, Accuracy: 0.9510
+
+[Round 46] Aggregated Metrics → Loss: 0.2692, Accuracy: 0.9726
+[2025-05-19 12:10:48,747][flwr][INFO] - 
+[2025-05-19 12:10:48,748][flwr][INFO] - [ROUND 47]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:10:48,749][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:13:07,738][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 47] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9976, Loss: 0.0216
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 47] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9975, Loss: 0.0262
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 47] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4706, Loss: 2.3409
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665157
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665091
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:13:08,018][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:13:10,237][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 47] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.4241, Accuracy: 0.9554
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 47] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0696, Accuracy: 0.9899
+
+[Round 47] Aggregated Metrics → Loss: 0.2441, Accuracy: 0.9729
+[2025-05-19 12:13:10,360][flwr][INFO] - 
+[2025-05-19 12:13:10,360][flwr][INFO] - [ROUND 48]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:13:10,361][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:16:24,367][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 48] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4477, Loss: 2.7139
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 48] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9986, Loss: 0.0105
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 48] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9967, Loss: 0.0349
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665108
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665133
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:16:24,651][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:16:26,815][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 48] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.3123, Accuracy: 0.9710
+[Round 48] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0690, Accuracy: 0.9915
+
+[Round 48] Aggregated Metrics → Loss: 0.1887, Accuracy: 0.9814
+[2025-05-19 12:16:26,939][flwr][INFO] - 
+[2025-05-19 12:16:26,940][flwr][INFO] - [ROUND 49]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:16:26,940][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:19:31,781][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 49] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9990, Loss: 0.0142
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 49] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4953, Loss: 2.1259
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 49] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9958, Loss: 0.0256
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665089
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665114
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:19:32,052][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:19:34,280][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 49] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1146, Accuracy: 0.9859
+[Round 49] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1976, Accuracy: 0.9783
+
+[Round 49] Aggregated Metrics → Loss: 0.1555, Accuracy: 0.9821
+[2025-05-19 12:19:34,411][flwr][INFO] - 
+[2025-05-19 12:19:34,412][flwr][INFO] - [ROUND 50]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:19:34,412][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:22:49,425][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 50] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9960, Loss: 0.0406
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 50] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4925, Loss: 2.2449
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 50] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9992, Loss: 0.0126
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665101
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665098
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:22:49,737][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:22:51,946][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 50] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0575, Accuracy: 0.9927
+[Round 50] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.3763, Accuracy: 0.9623
+
+[Round 50] Aggregated Metrics → Loss: 0.2143, Accuracy: 0.9777
+[2025-05-19 12:22:52,525][flwr][INFO] - 
+[2025-05-19 12:22:52,525][flwr][INFO] - [ROUND 51]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:22:52,526][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:25:29,253][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 51] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0363
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 51] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4899, Loss: 2.1404
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 51] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9958, Loss: 0.0574
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665065
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665116
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:25:29,538][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:25:31,744][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 51] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.3531, Accuracy: 0.9635
+[Round 51] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0552, Accuracy: 0.9917
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+
+[Round 51] Aggregated Metrics → Loss: 0.2018, Accuracy: 0.9778
+[2025-05-19 12:25:31,877][flwr][INFO] - 
+[2025-05-19 12:25:31,878][flwr][INFO] - [ROUND 52]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:25:31,879][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:28:46,940][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 52] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4976, Loss: 2.0711
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 52] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0316
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 52] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9956, Loss: 0.0427
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665086
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665065
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:28:47,257][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:28:49,878][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 52] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2580, Accuracy: 0.9696
+[Round 52] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0594, Accuracy: 0.9891
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+
+[Round 52] Aggregated Metrics → Loss: 0.1571, Accuracy: 0.9795
+[2025-05-19 12:28:50,031][flwr][INFO] - 
+[2025-05-19 12:28:50,031][flwr][INFO] - [ROUND 53]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:28:50,032][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:31:57,038][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 53] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4895, Loss: 2.1784
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 53] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9973, Loss: 0.0321
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 53] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9980, Loss: 0.0284
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665080
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665071
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:31:57,331][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:31:59,876][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 53] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2363, Accuracy: 0.9716
+[Round 53] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0661, Accuracy: 0.9905
+
+[Round 53] Aggregated Metrics → Loss: 0.1499, Accuracy: 0.9812
+[2025-05-19 12:32:00,016][flwr][INFO] - 
+[2025-05-19 12:32:00,018][flwr][INFO] - [ROUND 54]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:32:00,020][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:34:59,524][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 54] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9988, Loss: 0.0274
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 54] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9969, Loss: 0.0481
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 54] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.4987, Loss: 2.1094
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665055
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665072
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:34:59,777][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:35:01,711][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 54] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0594, Accuracy: 0.9907
+[Round 54] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2415, Accuracy: 0.9712
+
+[Round 54] Aggregated Metrics → Loss: 0.1490, Accuracy: 0.9811
+[2025-05-19 12:35:01,831][flwr][INFO] - 
+[2025-05-19 12:35:01,832][flwr][INFO] - [ROUND 55]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:35:01,833][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:38:27,533][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 55] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.5066, Loss: 2.0291
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 55] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9967, Loss: 0.0311
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 55] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9982, Loss: 0.0189
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665045
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665048
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:38:27,850][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:38:30,068][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 55] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0536, Accuracy: 0.9925
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 55] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2325, Accuracy: 0.9704
+
+[Round 55] Aggregated Metrics → Loss: 0.1417, Accuracy: 0.9816
+[2025-05-19 12:38:30,299][flwr][INFO] - 
+[2025-05-19 12:38:30,299][flwr][INFO] - [ROUND 56]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:38:30,301][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:41:30,104][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 56] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.5159, Loss: 1.9535
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 56] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9982, Loss: 0.0290
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 56] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9962, Loss: 0.0560
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665058
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665047
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:41:30,384][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:41:32,783][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 56] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1300, Accuracy: 0.9898
+[Round 56] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1110, Accuracy: 0.9869
+
+[Round 56] Aggregated Metrics → Loss: 0.1204, Accuracy: 0.9883
+[2025-05-19 12:41:32,912][flwr][INFO] - 
+[2025-05-19 12:41:32,914][flwr][INFO] - [ROUND 57]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:41:32,914][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:44:42,523][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 57] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9971, Loss: 0.0460
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 57] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.5077, Loss: 2.0692
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 57] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9984, Loss: 0.0268
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665121
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665051
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:44:42,789][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:44:45,459][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 57] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1545, Accuracy: 0.9812
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 57] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1152, Accuracy: 0.9842
+
+[Round 57] Aggregated Metrics → Loss: 0.1352, Accuracy: 0.9827
+[2025-05-19 12:44:45,601][flwr][INFO] - 
+[2025-05-19 12:44:45,601][flwr][INFO] - [ROUND 58]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:44:45,602][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:48:07,316][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 58] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9950, Loss: 0.0723
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 58] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9986, Loss: 0.0189
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 58] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.5281, Loss: 1.8611
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665100
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665088
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:48:07,637][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:48:09,828][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 58] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.1216, Accuracy: 0.9844
+[Round 58] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.1846, Accuracy: 0.9773
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+
+[Round 58] Aggregated Metrics → Loss: 0.1526, Accuracy: 0.9809
+[2025-05-19 12:48:09,960][flwr][INFO] - 
+[2025-05-19 12:48:09,961][flwr][INFO] - [ROUND 59]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:48:09,961][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:51:05,167][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 59] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9965, Loss: 0.0472
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+[Round 59] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9978, Loss: 0.0396
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 59] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.5137, Loss: 1.8708
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665066
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665147
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:51:05,431][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:51:07,703][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+[Round 59] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0448, Accuracy: 0.9935
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 59] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2985, Accuracy: 0.9656
+
+[Round 59] Aggregated Metrics → Loss: 0.1696, Accuracy: 0.9798
+[2025-05-19 12:51:07,839][flwr][INFO] - 
+[2025-05-19 12:51:07,839][flwr][INFO] - [ROUND 60]
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:51:07,840][flwr][INFO] - configure_fit: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:54:19,944][flwr][INFO] - aggregate_fit: received 3 results and 0 failures
+[Round 60] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Accuracy: 0.9984, Loss: 0.0218
+Loaded latent representation from latent_representations/client_[0, 1, 2, 3].npy for Client 4b46c88fb44f45a8a3a6a18a0336e30c
+[Round 60] Client 30713de3c6174936a57e34d84493128b - Accuracy: 0.5311, Loss: 1.8239
+Skipping flagged client 30713de3c6174936a57e34d84493128b
+[Round 60] Client dc9a2b4e5288473499b8d02fcb0906f3 - Accuracy: 0.9967, Loss: 0.0335
+Loaded latent representation from latent_representations/client_[6, 7, 8, 9].npy for Client dc9a2b4e5288473499b8d02fcb0906f3
+Client 4b46c88fb44f45a8a3a6a18a0336e30c Reconstruction Error: 0.665057
+✅ Client 4b46c88fb44f45a8a3a6a18a0336e30c passed anomaly check.
+Client dc9a2b4e5288473499b8d02fcb0906f3 Reconstruction Error: 0.665054
+✅ Client dc9a2b4e5288473499b8d02fcb0906f3 passed anomaly check.
+Available clients after filtering: ['dc9a2b4e5288473499b8d02fcb0906f3', '4b46c88fb44f45a8a3a6a18a0336e30c']
+[2025-05-19 12:54:20,256][flwr][INFO] - configure_evaluate: strategy sampled 3 clients (out of 3)
+[2025-05-19 12:54:22,664][flwr][INFO] - aggregate_evaluate: received 3 results and 0 failures
+Skipping flagged client 30713de3c6174936a57e34d84493128b in evaluation
+[Round 60] Client dc9a2b4e5288473499b8d02fcb0906f3 - Loss: 0.2924, Accuracy: 0.9589
+[Round 60] Client 4b46c88fb44f45a8a3a6a18a0336e30c - Loss: 0.0359, Accuracy: 0.9937
+
+[Round 60] Aggregated Metrics → Loss: 0.1621, Accuracy: 0.9766
+[2025-05-19 12:54:22,794][flwr][INFO] - 
+[2025-05-19 12:54:22,795][flwr][INFO] - [SUMMARY]
+[2025-05-19 12:54:22,795][flwr][INFO] - Run finished 60 round(s) in 10465.87s
+[2025-05-19 12:54:22,803][flwr][INFO] - 	History (loss, distributed):
+[2025-05-19 12:54:22,805][flwr][INFO] - 		round 1: 2.1502246280932593
+[2025-05-19 12:54:22,805][flwr][INFO] - 		round 2: 1.4120220886236448
+[2025-05-19 12:54:22,805][flwr][INFO] - 		round 3: 1.2449416668150497
+[2025-05-19 12:54:22,805][flwr][INFO] - 		round 4: 1.3208497261070407
+[2025-05-19 12:54:22,807][flwr][INFO] - 		round 5: 1.5017232355398105
+[2025-05-19 12:54:22,807][flwr][INFO] - 		round 6: 1.6451346630144734
+[2025-05-19 12:54:22,807][flwr][INFO] - 		round 7: 1.711726155034986
+[2025-05-19 12:54:22,808][flwr][INFO] - 		round 8: 1.956682307809114
+[2025-05-19 12:54:22,808][flwr][INFO] - 		round 9: 1.8452643434789084
+[2025-05-19 12:54:22,808][flwr][INFO] - 		round 10: 2.2652944288382897
+[2025-05-19 12:54:22,808][flwr][INFO] - 		round 11: 2.409735135940464
+[2025-05-19 12:54:22,809][flwr][INFO] - 		round 12: 2.663068232084341
+[2025-05-19 12:54:22,809][flwr][INFO] - 		round 13: 2.554148229611856
+[2025-05-19 12:54:22,809][flwr][INFO] - 		round 14: 2.975110232750634
+[2025-05-19 12:54:22,810][flwr][INFO] - 		round 15: 2.9949747498011337
+[2025-05-19 12:54:22,810][flwr][INFO] - 		round 16: 3.126393245637336
+[2025-05-19 12:54:22,810][flwr][INFO] - 		round 17: 3.0688017838096084
+[2025-05-19 12:54:22,810][flwr][INFO] - 		round 18: 3.267845770557318
+[2025-05-19 12:54:22,811][flwr][INFO] - 		round 19: 3.1976985187062206
+[2025-05-19 12:54:22,811][flwr][INFO] - 		round 20: 3.1452761435237195
+[2025-05-19 12:54:22,812][flwr][INFO] - 		round 21: 3.300158280599378
+[2025-05-19 12:54:22,812][flwr][INFO] - 		round 22: 3.355730872949437
+[2025-05-19 12:54:22,812][flwr][INFO] - 		round 23: 3.3581611629297488
+[2025-05-19 12:54:22,812][flwr][INFO] - 		round 24: 3.4971497756006844
+[2025-05-19 12:54:22,813][flwr][INFO] - 		round 25: 3.3065315276948497
+[2025-05-19 12:54:22,813][flwr][INFO] - 		round 26: 3.711617631433251
+[2025-05-19 12:54:22,813][flwr][INFO] - 		round 27: 3.4076282033917624
+[2025-05-19 12:54:22,813][flwr][INFO] - 		round 28: 3.4247959506488983
+[2025-05-19 12:54:22,814][flwr][INFO] - 		round 29: 3.5602133961566356
+[2025-05-19 12:54:22,814][flwr][INFO] - 		round 30: 3.649093889892079
+[2025-05-19 12:54:22,814][flwr][INFO] - 		round 31: 3.3355050952046135
+[2025-05-19 12:54:22,815][flwr][INFO] - 		round 32: 3.6067078934461576
+[2025-05-19 12:54:22,815][flwr][INFO] - 		round 33: 3.886308377720122
+[2025-05-19 12:54:22,815][flwr][INFO] - 		round 34: 0.4654406697753795
+[2025-05-19 12:54:22,815][flwr][INFO] - 		round 35: 0.26639686355724196
+[2025-05-19 12:54:22,815][flwr][INFO] - 		round 36: 0.18034329272393837
+[2025-05-19 12:54:22,815][flwr][INFO] - 		round 37: 0.18768195266414356
+[2025-05-19 12:54:22,817][flwr][INFO] - 		round 38: 0.18433048704234803
+[2025-05-19 12:54:22,817][flwr][INFO] - 		round 39: 0.23616673364323718
+[2025-05-19 12:54:22,817][flwr][INFO] - 		round 40: 0.14429753128125655
+[2025-05-19 12:54:22,818][flwr][INFO] - 		round 41: 0.19006718341559922
+[2025-05-19 12:54:22,818][flwr][INFO] - 		round 42: 0.1534945707984609
+[2025-05-19 12:54:22,818][flwr][INFO] - 		round 43: 0.12174100822131753
+[2025-05-19 12:54:22,819][flwr][INFO] - 		round 44: 0.1278324660695923
+[2025-05-19 12:54:22,819][flwr][INFO] - 		round 45: 0.24436561396670228
+[2025-05-19 12:54:22,820][flwr][INFO] - 		round 46: 0.2691636112359286
+[2025-05-19 12:54:22,820][flwr][INFO] - 		round 47: 0.24407602384158186
+[2025-05-19 12:54:22,821][flwr][INFO] - 		round 48: 0.18873827754583636
+[2025-05-19 12:54:22,821][flwr][INFO] - 		round 49: 0.15545434266769068
+[2025-05-19 12:54:22,821][flwr][INFO] - 		round 50: 0.21434061909166527
+[2025-05-19 12:54:22,822][flwr][INFO] - 		round 51: 0.20176999528138242
+[2025-05-19 12:54:22,946][flwr][INFO] - 		round 52: 0.15710273402885624
+[2025-05-19 12:54:22,947][flwr][INFO] - 		round 53: 0.14985599542704264
+[2025-05-19 12:54:22,948][flwr][INFO] - 		round 54: 0.14904974789096515
+[2025-05-19 12:54:22,949][flwr][INFO] - 		round 55: 0.1416528650854523
+[2025-05-19 12:54:22,949][flwr][INFO] - 		round 56: 0.12035170230691805
+[2025-05-19 12:54:22,950][flwr][INFO] - 		round 57: 0.1351683476275999
+[2025-05-19 12:54:22,950][flwr][INFO] - 		round 58: 0.1526093337441178
+[2025-05-19 12:54:22,950][flwr][INFO] - 		round 59: 0.16961893509811474
+[2025-05-19 12:54:22,951][flwr][INFO] - 		round 60: 0.16213761073765814
+[2025-05-19 12:54:22,951][flwr][INFO] - 	History (metrics, distributed, evaluate):
+[2025-05-19 12:54:22,951][flwr][INFO] - 	{'accuracy': [(1, 0.4414908384230983),
+[2025-05-19 12:54:22,952][flwr][INFO] - 	              (2, 0.643670183231538),
+[2025-05-19 12:54:22,952][flwr][INFO] - 	              (3, 0.7189755691282621),
+[2025-05-19 12:54:22,952][flwr][INFO] - 	              (4, 0.7270960577456969),
+[2025-05-19 12:54:22,953][flwr][INFO] - 	              (5, 0.7427817878956136),
+[2025-05-19 12:54:22,953][flwr][INFO] - 	              (6, 0.752082176568573),
+[2025-05-19 12:54:22,953][flwr][INFO] - 	              (7, 0.7402831760133259),
+[2025-05-19 12:54:22,953][flwr][INFO] - 	              (8, 0.7398667406996113),
+[2025-05-19 12:54:22,954][flwr][INFO] - 	              (9, 0.7461132704053304),
+[2025-05-19 12:54:22,954][flwr][INFO] - 	              (10, 0.7441699056079956),
+[2025-05-19 12:54:22,954][flwr][INFO] - 	              (11, 0.7334813992226541),
+[2025-05-19 12:54:22,954][flwr][INFO] - 	              (12, 0.7392420877290394),
+[2025-05-19 12:54:22,955][flwr][INFO] - 	              (13, 0.7345918933925597),
+[2025-05-19 12:54:22,955][flwr][INFO] - 	              (14, 0.7429900055524709),
+[2025-05-19 12:54:22,955][flwr][INFO] - 	              (15, 0.7446557468073293),
+[2025-05-19 12:54:22,955][flwr][INFO] - 	              (16, 0.7411854525263742),
+[2025-05-19 12:54:22,956][flwr][INFO] - 	              (17, 0.7332731815657968),
+[2025-05-19 12:54:22,956][flwr][INFO] - 	              (18, 0.7325097168239867),
+[2025-05-19 12:54:22,956][flwr][INFO] - 	              (19, 0.7222376457523598),
+[2025-05-19 12:54:22,956][flwr][INFO] - 	              (20, 0.7327873403664631),
+[2025-05-19 12:54:22,957][flwr][INFO] - 	              (21, 0.7323709050527485),
+[2025-05-19 12:54:22,957][flwr][INFO] - 	              (22, 0.7225152692948362),
+[2025-05-19 12:54:22,957][flwr][INFO] - 	              (23, 0.7277207107162688),
+[2025-05-19 12:54:22,958][flwr][INFO] - 	              (24, 0.7283453636868407),
+[2025-05-19 12:54:22,958][flwr][INFO] - 	              (25, 0.7330649639089395),
+[2025-05-19 12:54:22,958][flwr][INFO] - 	              (26, 0.7302193225985564),
+[2025-05-19 12:54:22,959][flwr][INFO] - 	              (27, 0.72994169905608),
+[2025-05-19 12:54:22,959][flwr][INFO] - 	              (28, 0.7321626873958912),
+[2025-05-19 12:54:22,960][flwr][INFO] - 	              (29, 0.7338284286507496),
+[2025-05-19 12:54:22,960][flwr][INFO] - 	              (30, 0.7319544697390339),
+[2025-05-19 12:54:22,961][flwr][INFO] - 	              (31, 0.727165463631316),
+[2025-05-19 12:54:22,961][flwr][INFO] - 	              (32, 0.7282759578012216),
+[2025-05-19 12:54:22,961][flwr][INFO] - 	              (33, 0.7304969461410328),
+[2025-05-19 12:54:22,961][flwr][INFO] - 	              (34, 0.9163759491073261),
+[2025-05-19 12:54:22,962][flwr][INFO] - 	              (35, 0.9480812641083521),
+[2025-05-19 12:54:22,962][flwr][INFO] - 	              (36, 0.9684998973938026),
+[2025-05-19 12:54:22,962][flwr][INFO] - 	              (37, 0.9704494151446748),
+[2025-05-19 12:54:22,962][flwr][INFO] - 	              (38, 0.9738354196593474),
+[2025-05-19 12:54:22,963][flwr][INFO] - 	              (39, 0.9659347424584445),
+[2025-05-19 12:54:22,963][flwr][INFO] - 	              (40, 0.9804022162938641),
+[2025-05-19 12:54:22,963][flwr][INFO] - 	              (41, 0.9740406320541761),
+[2025-05-19 12:54:22,963][flwr][INFO] - 	              (42, 0.9792735481223066),
+[2025-05-19 12:54:22,964][flwr][INFO] - 	              (43, 0.9830699774266366),
+[2025-05-19 12:54:22,965][flwr][INFO] - 	              (44, 0.9825569464395649),
+[2025-05-19 12:54:22,965][flwr][INFO] - 	              (45, 0.9740406320541761),
+[2025-05-19 12:54:22,965][flwr][INFO] - 	              (46, 0.9726041452903755),
+[2025-05-19 12:54:22,965][flwr][INFO] - 	              (47, 0.9729119638826185),
+[2025-05-19 12:54:22,965][flwr][INFO] - 	              (48, 0.9814282782680074),
+[2025-05-19 12:54:22,965][flwr][INFO] - 	              (49, 0.9821465216499077),
+[2025-05-19 12:54:22,966][flwr][INFO] - 	              (50, 0.9777344551610917),
+[2025-05-19 12:54:22,966][flwr][INFO] - 	              (51, 0.977837061358506),
+[2025-05-19 12:54:22,966][flwr][INFO] - 	              (52, 0.9794787605171352),
+[2025-05-19 12:54:22,966][flwr][INFO] - 	              (53, 0.9812230658731788),
+[2025-05-19 12:54:22,967][flwr][INFO] - 	              (54, 0.9811204596757644),
+[2025-05-19 12:54:22,967][flwr][INFO] - 	              (55, 0.981633490662836),
+[2025-05-19 12:54:22,967][flwr][INFO] - 	              (56, 0.9883028934947671),
+[2025-05-19 12:54:22,968][flwr][INFO] - 	              (57, 0.9826595526369792),
+[2025-05-19 12:54:22,968][flwr][INFO] - 	              (58, 0.9809152472809358),
+[2025-05-19 12:54:22,968][flwr][INFO] - 	              (59, 0.9797865791093782),
+[2025-05-19 12:54:22,968][flwr][INFO] - 	              (60, 0.9766057869895342)],
