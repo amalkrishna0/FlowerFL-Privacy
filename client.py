@@ -16,6 +16,7 @@ import uuid
 import time
 from model import Autoencoder  # Import your autoencoder model
 from collections import Counter
+from flwr.common import ndarrays_to_parameters, GetParametersRes, Status
 
 # Load the secret context for homomorphic encryption
 # This ensures encrypted communication for model updates
@@ -57,35 +58,24 @@ class HomomorphicFlowerClient(fl.client.NumPyClient):
 
 
     def get_parameters(self, config):
-        """
-        Retrieves model parameters and encrypts them using CKKS homomorphic encryption.
-        Args:
-            config (dict): Configuration parameters
-        Returns:
-            List: Encrypted model parameters
-        """
         params = [param.cpu().detach().numpy() for param in self.net.parameters()]
 
-        # 🔹 Step 1: Save Model Update and Capture Filename
-        file_name = self.save_model_update(params, MODEL_PATH)  # Get the filename
-
-        # 🔹 Step 2: Load the Saved Model Update
+        file_name = self.save_model_update(params, MODEL_PATH)
         file_path = os.path.join(MODEL_PATH, file_name)
+
         with open(file_path, "rb") as f:
             saved_params = pickle.load(f)
 
         print(f"📌 Loaded {len(saved_params)} model parameters from {file_path}.")
 
         if self.noise:
-            # 🔹 Step 3: Add Perturbation (Gaussian Noise)
             saved_params = self.perturb_params(saved_params, noise_level=0.2)
-
             print(f"✅ Model parameters have been perturbed for {file_name}.")
 
-        # 🔹 Step 4: Encrypt Perturbed Parameters
-        encrypted_params = [ts.ckks_vector(context, param.flatten()).serialize() for param in params]
-        
-        return encrypted_params
+        encrypted_params = [ts.ckks_vector(context, param.flatten()).serialize() for param in saved_params]
+
+        return encrypted_params  # ✅ Just return the list
+
 
 
     def add_structured_noise(self, tensor, noise_factor):
@@ -356,7 +346,7 @@ def main():
     trainloader, valloader, testloader = load_data(args.labels, malicious=args.malicious, noise=args.noise)
     net = Net()
 
-    fl.client.start_client(
+    fl.client.start_numpy_client(
         server_address=os.getenv("FL_SERVER_ADDRESS", "localhost:8080"),
         client=HomomorphicFlowerClient(str(args.labels), net, trainloader, valloader, testloader, malicious=args.malicious, noise=args.noise)
     )

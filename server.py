@@ -311,7 +311,7 @@ def main(cfg: DictConfig):
         fraction_evaluate=0.5,
     )
 
-    server_address = os.getenv("FL_SERVER_ADDRESS", "0.0.0.0:5555")
+    server_address = os.getenv("FL_SERVER_ADDRESS", "0.0.0.0:8080")
     fl.server.start_server(
         server_address=server_address,
         config=fl.server.ServerConfig(num_rounds=cfg.server.num_rounds),
